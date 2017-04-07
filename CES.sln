@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26228.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CES_WebApp", "CES_WebApp\CES_WebApp.csproj", "{33391CEB-89B3-4D94-A8A4-A354EB107051}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CES_BLL", "CES_BLL\CES_BLL.csproj", "{71237768-0BDD-49EC-8DDC-7990298F11C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CES_DAL", "CES_DAL\CES_DAL.csproj", "{3BE2C94E-AD8E-4A5F-9E18-A892008163A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{33391CEB-89B3-4D94-A8A4-A354EB107051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33391CEB-89B3-4D94-A8A4-A354EB107051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33391CEB-89B3-4D94-A8A4-A354EB107051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71237768-0BDD-49EC-8DDC-7990298F11C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71237768-0BDD-49EC-8DDC-7990298F11C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71237768-0BDD-49EC-8DDC-7990298F11C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71237768-0BDD-49EC-8DDC-7990298F11C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BE2C94E-AD8E-4A5F-9E18-A892008163A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE2C94E-AD8E-4A5F-9E18-A892008163A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE2C94E-AD8E-4A5F-9E18-A892008163A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE2C94E-AD8E-4A5F-9E18-A892008163A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

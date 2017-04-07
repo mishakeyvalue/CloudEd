@@ -1,0 +1,50 @@
+@model System.Collections.Generic.List<CES_BLL.Topic>
+
+
+    @{
+        ViewData["Title"] = "Index";
+    }
+
+    <h2>Index</h2>
+
+    @*<form asp-action="Index">
+
+        <input asp-for="Uri" />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Go!" class="btn btn-default" />
+            </div>
+        </div>
+    </form>*@
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Html.DisplayNameFor(model => model[0].TopicTitle)
+                </th>
+                <th>
+                    Html.DisplayNameFor(model => model[0].DownloadTime)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        item.Uri
+                    </td>
+                    <td>
+                        @item.TopicTitle
+                    </td>
+                    <td>
+                        item.PageSize MB
+                    </td>
+
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
