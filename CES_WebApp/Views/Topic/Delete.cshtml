@@ -1,0 +1,14 @@
+﻿@model Topic
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Удаление</h2>
+
+<div>
+    <h3>Тема: @Model.TopicTitle</h3>
+@foreach (Question q in Model.Questions) {
+    <div>@q.Title</div>
+    }
+</div>
+

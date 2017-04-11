@@ -74,15 +74,16 @@ namespace CES_WebApp.Controllers
         }
 
         // GET: Topic/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string title)
         {
-            return View();
+            Topic toDelete =  topicService.Get(title);
+            return View(toDelete);
         }
 
-        // POST: Topic/Delete/5
+        // POST: Topic/Delete/5]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(string title, int id)
         {
             try
             {

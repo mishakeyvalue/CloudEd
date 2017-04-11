@@ -44,7 +44,7 @@
                     <td width="15%">
                         <form asp-action="Delete" method="post">
                             <div class="form-actions no-color">
-                                <a asp-action="Delete" type="submit" class="btn btn-danger">Удалить тему</a>
+                                <a asp-action="Delete" asp-route-title="@item.TopicTitle"  class="btn btn-danger">Удалить тему</a>
 
                             </div>
                         </form>
