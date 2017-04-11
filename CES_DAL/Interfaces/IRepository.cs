@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CES_BLL.Interfaces
+namespace CES_DAL.Interfaces
 {
     public interface IRepository<TEntity>
     {
-        TEntity Get(int id);
+        TEntity Get(string id);
         IEnumerable<TEntity> GetAll();
 
         void Add(TEntity item);

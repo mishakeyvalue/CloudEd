@@ -5,24 +5,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CES_BLL;
+using CES_BLL.Services;
+using CES_DAL.Enteties;
+using CES_DAL.Interfaces;
 
 namespace CES_WebApp.Controllers
 {
     public class TopicController : Controller
     {
-        private UnitOfWork _unitOfWork = new UnitOfWork();
+        private TopicService topicService = new TopicService();
 
         // GET: Topic
         public ActionResult Index()
         {
-            return View(_unitOfWork.TopicRepo.GetAll());
+            return View(topicService.GetAll());
         }
 
-        // GET: Topic/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //////GET: Topic/Details/5
+        ////public ActionResult Details(int id)
+        ////{
+        ////    return View();
+        ////}
 
         // GET: Topic/Create
         public ActionResult Create()
@@ -38,7 +41,7 @@ namespace CES_WebApp.Controllers
             try
             {
 
-                _unitOfWork.TopicRepo.Add(newTopic);
+                topicService.Add(newTopic);
                 return RedirectToAction("Index");
             }
             catch

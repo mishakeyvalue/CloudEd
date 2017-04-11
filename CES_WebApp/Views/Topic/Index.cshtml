@@ -1,11 +1,11 @@
-@model System.Collections.Generic.List<CES_BLL.Topic>
+﻿@model System.Collections.Generic.List<Topic>
 
 
     @{
-        ViewData["Title"] = "Index";
+        ViewData["Title"] = "Список тем";
     }
 
-    <h2>Index</h2>
+    <h2>Список тем</h2>
 
     @*<form asp-action="Index">
 
@@ -20,10 +20,10 @@
         <thead>
             <tr>
                 <th>
-                    Html.DisplayNameFor(model => model[0].TopicTitle)
+                    Название
                 </th>
                 <th>
-                    Html.DisplayNameFor(model => model[0].DownloadTime)
+                    Вопросы
                 </th>
 
                 <th></th>
@@ -33,17 +33,26 @@
             @foreach (var item in Model) {
                 <tr>
                     <td>
-                        item.Uri
-                    </td>
-                    <td>
                         @item.TopicTitle
                     </td>
                     <td>
-                        item.PageSize MB
+                        @item.Questions.Count
+                    </td>
+                    <td width="15%">
+                        <button type="button" class="btn btn-primary">Добавить вопрос</button>
+                    </td>
+                    <td width="15%">
+                        <form asp-action="Delete" method="post">
+                            <div class="form-actions no-color">
+                                <a asp-action="Delete" type="submit" class="btn btn-danger">Удалить тему</a>
+
+                            </div>
+                        </form>
                     </td>
 
                 </tr>
             }
+            <a asp-action="Create" type="button" class="btn btn-info">Добавить тему</a>
 
 
         </tbody>
