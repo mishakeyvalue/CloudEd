@@ -1,6 +1,7 @@
 ﻿using CES_DAL;
-using CES_DAL.Enteties;
+using CES_DAL.Models;
 using CES_DAL.Interfaces;
+using CES_DAL.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace CES_BLL.Services
 
         public TopicService()
         {
-            _repo = TopicRepository.GetRepo();
+            _repo = TopicRepository.GetRepository();
         }
         public IEnumerable<Topic> GetAll()
         {
@@ -30,5 +31,7 @@ namespace CES_BLL.Services
             t.Questions = new List<Question>();
             _repo.Add(t);
         }
+
+        
     }
 }

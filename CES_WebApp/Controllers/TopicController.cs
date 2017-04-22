@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using CES_BLL;
 using CES_BLL.Services;
-using CES_DAL.Enteties;
+using CES_DAL.Models;
 using CES_DAL.Interfaces;
 
 namespace CES_WebApp.Controllers

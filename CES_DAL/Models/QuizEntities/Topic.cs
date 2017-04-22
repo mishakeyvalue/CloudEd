@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace CES_DAL.Enteties
+namespace CES_DAL.Models
 {
     public class Topic
     {

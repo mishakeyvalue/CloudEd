@@ -6,6 +6,8 @@ namespace CES_DAL.Interfaces
 {
     public interface IRepository<TEntity>
     {
+
+
         TEntity Get(string id);
         IEnumerable<TEntity> GetAll();
 

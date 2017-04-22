@@ -1,45 +1,61 @@
-﻿using CES_DAL.Enteties;
+﻿using CES_DAL.Models;
 using CES_DAL.Interfaces;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace CES_DAL
 {
     public class TopicRepository : IRepository<Topic>
     {
-        private static List<Topic> _collection              = new List<Topic>();
-        private static IMongoCollection<BsonDocument> _mongo_c;
-
-        public static IRepository<Topic> GetRepo()
+        public static IRepository<Topic> GetRepository()
         {
             return new TopicRepository();
         }
 
+        private readonly string _configFile = "C:\\mongo.txt";
+        private readonly string _db_name = "cloud_educational_system";
+        private string _cStr;
         private TopicRepository()
         {
+            _cStr = _loadConnectionString(_configFile); // Connection string
+            _cStr = "mongodb://mi:mi@ds151060.mlab.com:51060/cloud_educational_system";
 
-            string connection_string = "mongodb://admin:miDB123@ds151060.mlab.com:51060/cloud_educational_system";
-            var client = new MongoClient(connection_string);
-            var db = client.GetDatabase("Topic");
-            _mongo_c = db.GetCollection<BsonDocument>("Topics");
+
+        }
+        private IMongoDatabase _getDataBase()
+        {
+            var client = new MongoClient(_cStr);
             
+            var res = client.ListDatabases();
+            string j = res.ToJson();
+            return  client.GetDatabase(_db_name);
+
+        }
+        private string _loadConnectionString(string configFile)
+        {
+            return File.ReadAllText(configFile);
         }
 
-        public void Add(Topic item)
+        public async void Add(Topic item)
         {
-            _collection.Add(item);
+            IMongoDatabase db = _getDataBase();
+            db.CreateCollection("topics");
+            var collection = db.GetCollection<BsonDocument>("topics");
+
+            await collection.InsertOneAsync(item.ToBsonDocument());
         }
 
-        public Topic Get(string _id)
+        public Topic Get(string id)
         {
-            return _collection.Find((t) => t.TopicTitle == _id);
+            throw new NotImplementedException();
         }
 
-        public System.Collections.Generic.IEnumerable<Topic> GetAll()
+        public IEnumerable<Topic> GetAll()
         {
-            return _collection;
+            throw new NotImplementedException();
         }
 
 

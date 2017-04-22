@@ -1,4 +1,4 @@
-﻿using CES_DAL.Enteties;
+﻿using CES_DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
