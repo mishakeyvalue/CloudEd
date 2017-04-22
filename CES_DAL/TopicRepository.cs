@@ -1,7 +1,6 @@
 ﻿using CES_DAL.Models;
 using CES_DAL.Interfaces;
-using MongoDB.Bson;
-using MongoDB.Driver;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,15 +24,15 @@ namespace CES_DAL
 
 
         }
-        private IMongoDatabase _getDataBase()
-        {
-            var client = new MongoClient(_cStr);
+        //private IMongoDatabase _getDataBase()
+        //{
+        //    var client = new MongoClient(_cStr);
             
-            var res = client.ListDatabases();
-            string j = res.ToJson();
-            return  client.GetDatabase(_db_name);
+        //    var res = client.ListDatabases();
+        //    string j = res.ToJson();
+        //    return  client.GetDatabase(_db_name);
 
-        }
+        //}
         private string _loadConnectionString(string configFile)
         {
             return File.ReadAllText(configFile);
@@ -41,11 +40,11 @@ namespace CES_DAL
 
         public async void Add(Topic item)
         {
-            IMongoDatabase db = _getDataBase();
-            db.CreateCollection("topics");
-            var collection = db.GetCollection<BsonDocument>("topics");
+         //   IMongoDatabase db = _getDataBase();
+        //    db.CreateCollection("topics");
+        ////    var collection = db.GetCollection<BsonDocument>("topics");
 
-            await collection.InsertOneAsync(item.ToBsonDocument());
+        //    await collection.InsertOneAsync(item.ToBsonDocument());
         }
 
         public Topic Get(string id)
