@@ -38,8 +38,16 @@ namespace CES_WebApp
                 options.UseSqlServer(Configuration.GetConnectionString( "DefaultConnection" )) );
             services.AddDbContext<AppIdentityContext>(options =>
                options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
-             
-            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityContext>();
+
+            services.AddIdentity<AppUser, IdentityRole>(opts => {
+                opts.Password.RequiredLength = 6;
+                opts.Password.RequireNonAlphanumeric = false;
+                opts.Password.RequireLowercase = false;
+                opts.Password.RequireUppercase = false;
+                opts.Password.RequireDigit = false;
+
+                opts.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnm1234567890";
+            }).AddEntityFrameworkStores<AppIdentityContext>();
             services.AddMvc();
         }
 

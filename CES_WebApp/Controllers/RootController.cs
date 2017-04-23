@@ -26,20 +26,19 @@ namespace CES_WebApp.Controllers
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(UserViewModel model)
         {
             if (ModelState.IsValid) {
-                AppUser newUser = new AppUser();
+                AppUser newUser = new AppUser() { UserName = model.Name, Login = model.Login, Password = model.Password };
                 switch (model.Rank) {
                     case Rank.Root:
                         break;
                     case Rank.Teacher:
-                        newUser = new Teacher() { UserName = model.Name, Login = model.Login, Password = model.Password };
+                        //  newUser = new Teacher() { UserName = model.Name, Login = model.Login, Password = model.Password };
                         break;
                     case Rank.Student:
-                        newUser = new Student() { UserName = model.Name, Login = model.Login, Password = model.Password };
+                        //  newUser = new Student() { UserName = model.Name, Login = model.Login, Password = model.Password };
                         break;
                     default:
                         break;
@@ -56,6 +55,52 @@ namespace CES_WebApp.Controllers
                 }
             }
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            AppUser user = await _userManager.FindByIdAsync(id);
+            if (user != null) {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                if (result.Succeeded) {
+                    return RedirectToAction("Index");
+                }
+                else {
+                    addErrorsFromResult(result);
+                }
+
+            }
+            else {
+                ModelState.AddModelError("", "User not found");
+            }
+            return View("Index", _userManager.Users);
+
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            AppUser user = await _userManager.FindByIdAsync(id);
+            if (user != null) {
+                return View(user);
+            }
+            else {
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserViewModel model, string id)
+        {
+            AppUser user = await _userManager.FindByIdAsync(id);
+            return View("Index");
+        }
+
+        private void addErrorsFromResult(IdentityResult result)
+        {
+            foreach (IdentityError error in result.Errors) {
+                ModelState.AddModelError("", error.Description);
+            }
         }
     }
 }

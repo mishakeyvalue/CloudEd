@@ -28,8 +28,5 @@
   <ItemGroup>
     <ProjectReference Include="..\CES__BLL\CES__BLL.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Root\" />
-  </ItemGroup>
 
 </Project>

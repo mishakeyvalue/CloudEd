@@ -12,5 +12,6 @@ namespace CES_DAL.Data
         public AppIdentityContext(DbContextOptions options) : base(options)
         {
         }
+
     }
 }
