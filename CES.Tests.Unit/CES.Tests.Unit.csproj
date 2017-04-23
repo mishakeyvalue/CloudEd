@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CES_BLL\CES_BLL.csproj" />
-    <ProjectReference Include="..\CES_DAL\CES_DAL.csproj" />
     <ProjectReference Include="..\CES_WebApp\CES_WebApp.csproj" />
   </ItemGroup>
 

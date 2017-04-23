@@ -3,9 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CES_DAL\CES_DAL.csproj" />
-  </ItemGroup>
+  <PropertyGroup>
+    <PackageTargetFallback>dnxcore50;portable-net45+win8+wp8+wpa81</PackageTargetFallback>
+  </PropertyGroup>
 
 </Project>

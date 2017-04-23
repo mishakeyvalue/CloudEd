@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using CES_DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using CES_DAL.Models.UsersEntities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CES_WebApp
 {
@@ -34,7 +36,10 @@ namespace CES_WebApp
 
             services.AddDbContext<SchoolContext>( options => 
                 options.UseSqlServer(Configuration.GetConnectionString( "DefaultConnection" )) );
-
+            services.AddDbContext<AppIdentityContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("IdentityConnection")));
+             
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppIdentityContext>();
             services.AddMvc();
         }
 
@@ -55,15 +60,17 @@ namespace CES_WebApp
             }
 
             app.UseStaticFiles();
+            app.UseIdentity();
+            #region Custom Cookies
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions() {
+            //    AuthenticationScheme = "MyAuthMiddleware",
+            //    LoginPath = new PathString("/Account/Unauthorized"),
+            //    AccessDeniedPath = new PathString("/Account/Forbidden"),
+            //    AutomaticAuthenticate = true,
+            //    AutomaticChallenge  = true
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions() {
-                AuthenticationScheme = "MyAuthMiddleware",
-                LoginPath = new PathString("/Account/Unauthorized"),
-                AccessDeniedPath = new PathString("/Account/Forbidden"),
-                AutomaticAuthenticate = true,
-                AutomaticChallenge  = true
-
-                });
+            //    }); 
+            #endregion
 
 
             app.UseMvc(routes =>
@@ -73,7 +80,7 @@ namespace CES_WebApp
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            DbInitializer.Initialize(context);
+       //     DbInitializer.Initialize(context);
         }
     }
 }
