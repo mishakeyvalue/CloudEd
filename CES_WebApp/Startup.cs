@@ -46,7 +46,7 @@ namespace CES_WebApp
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
 
-                opts.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnm1234567890";
+                opts.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnmйцукенгшщзхъфывапролджэячсмитьбю1234567890";
             }).AddEntityFrameworkStores<AppIdentityContext>();
             services.AddMvc();
         }

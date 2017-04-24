@@ -12,8 +12,8 @@
             <tr>
                 <td>@user.Id</td>
                 <td>@user.GetType()</td>
+                <td>@user.Name</td>
                 <td>@user.UserName</td>
-                <td>@user.Login</td>
                 <td>@user.Password</td>
                 <td>
                     <form asp-action="Delete" asp-route-id="@user.Id" method="post">

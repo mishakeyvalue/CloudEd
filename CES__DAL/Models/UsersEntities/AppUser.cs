@@ -11,7 +11,7 @@ namespace CES_DAL.Models.UsersEntities
 
         public string Name { get; set; }
 
-        public string Login { get; set; }
+        
         public string Password { get; set; }
     }
 }

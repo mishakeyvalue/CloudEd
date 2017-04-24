@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using CES_DAL.Models.UsersEntities;
 using CES_BLL.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CES_WebApp.Controllers
 {
+    [Authorize]
     public class RootController : Controller
     {
         private UserManager<AppUser> _userManager;
@@ -17,6 +19,7 @@ namespace CES_WebApp.Controllers
         {
             _userManager = userManager;
         }
+        
         public IActionResult Index()
         {
             return View(_userManager.Users);
@@ -30,7 +33,7 @@ namespace CES_WebApp.Controllers
         public async Task<IActionResult> Create(UserViewModel model)
         {
             if (ModelState.IsValid) {
-                AppUser newUser = new AppUser() { UserName = model.Name, Login = model.Login, Password = model.Password };
+                AppUser newUser = new AppUser() {Name = model.Name, UserName = model.Login, Password = model.Password };
                 switch (model.Rank) {
                     case Rank.Root:
                         break;

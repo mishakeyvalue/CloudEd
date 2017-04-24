@@ -26,7 +26,10 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CES__BLL\CES__BLL.csproj" />
+    <ProjectReference Include="..\CES__BLL\CES_BLL.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Account\" />
   </ItemGroup>
 
 </Project>
