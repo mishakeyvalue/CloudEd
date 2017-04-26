@@ -10,10 +10,10 @@ namespace CES_DAL.Data
     {
         public static void Initialize(SchoolContext context)
         {
-            context.Database.EnsureCreated();
+          //  context.Database.EnsureCreated();
 
             if (!context.Teachers.Any()) {
-                Teacher Mum = new Teacher() { Name = "Ирина Владимировна", Login = "kilua", Password = "cesadmin144" };
+                Teacher Mum = new Teacher() { Name = "Ирина Владимировна", UserName = "kilua", Password = "cesadmin144" };
                 context.Teachers.Add(Mum);
                 context.SaveChanges();
             }
