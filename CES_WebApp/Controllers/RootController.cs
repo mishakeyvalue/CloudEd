@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using CES_DAL.Models.UsersEntities;
 using CES_BLL.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CES_WebApp.Controllers
 {
@@ -14,10 +15,14 @@ namespace CES_WebApp.Controllers
     public class RootController : Controller
     {
         private UserManager<AppUser> _userManager;
+        private RoleManager<AppUser> _roleManager;
+
+
 
         public RootController(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
+         //   _roleManager = roleManager;
         }
         
         public IActionResult Index()
@@ -34,8 +39,12 @@ namespace CES_WebApp.Controllers
         {
             if (ModelState.IsValid) {
                 AppUser newUser = new AppUser() {Name = model.Name, UserName = model.Login, Password = model.Password };
+
+                
+
                 switch (model.Rank) {
                     case Rank.Root:
+                        
                         break;
                     case Rank.Teacher:
                         //  newUser = new Teacher() { UserName = model.Name, Login = model.Login, Password = model.Password };

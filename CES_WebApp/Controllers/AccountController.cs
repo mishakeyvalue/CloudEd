@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using CES_BLL.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using CES_DAL.Models.UsersEntities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CES_WebApp.Controllers
 {
@@ -16,11 +17,15 @@ namespace CES_WebApp.Controllers
     {
         private UserManager<AppUser> _userManager;
         private SignInManager<AppUser> _signInManger;
+        private RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManger = signInManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -42,7 +47,7 @@ namespace CES_WebApp.Controllers
 
         public async Task<IActionResult> SignOut()
         {
-            await HttpContext.Authentication.SignOutAsync("MyAuthMiddleware");
+            await _signInManger.SignOutAsync();
             return Content("Signed Out.");
         }
         [AllowAnonymous]

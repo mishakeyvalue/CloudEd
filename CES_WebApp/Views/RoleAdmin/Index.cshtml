@@ -11,7 +11,7 @@
             <tr>
                 <td>@role.Id</td>
                 <td>@role.Name</td>
-                <td identity-role="@role.Id"></td>
+                <td identity-role="@role.Users"></td>
                 <td>
                     <form asp-action="Delete" asp-route-id="@role.Id" method="post">
                         <a class="btn btn-sm btn-primary" asp-action="Edit"
@@ -26,4 +26,17 @@
         }
     }
 </table>
-<a class="btn btn-primary" asp-action="Create">Create</a>
+
+<form asp-action="Create" method="post">
+    <div class="form-horizontal">
+        <h4>Role</h4>
+
+
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5" >
+            <input type="text" class="form-control"  name="roleName"/>
+        </div>
+
+
+        <input type="submit" class="btn btn-primary"  value="Create"/>
+    </div>
+</form>

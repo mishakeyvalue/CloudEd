@@ -36,6 +36,23 @@
                     <li><a asp-area="" asp-controller="Topic" asp-action="Index">Темы</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                 </ul>
+                @if (User.Identity.IsAuthenticated)
+                { <ul class="nav navbar-nav navbar-right">
+
+                    <li>
+                        <a>
+                            @User.Identity.Name
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Account" asp-action="SignOut" class="btn" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>Выйти
+                        </a>
+
+                    </li>
+                </ul>
+                }
+
             </div>
         </div>
     </nav>

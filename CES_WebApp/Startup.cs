@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using CES_DAL.Models.UsersEntities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace CES_WebApp
 {
@@ -45,9 +46,10 @@ namespace CES_WebApp
                 opts.Password.RequireLowercase = false;
                 opts.Password.RequireUppercase = false;
                 opts.Password.RequireDigit = false;
-
+                
                 opts.User.AllowedUserNameCharacters = "qwertyuiopasdfghjklzxcvbnmйцукенгшщзхъфывапролджэячсмитьбю1234567890";
             }).AddEntityFrameworkStores<AppIdentityContext>();
+           
             services.AddMvc();
         }
 
