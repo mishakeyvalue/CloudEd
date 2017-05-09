@@ -11,7 +11,7 @@
             foreach (AppUser user in Model) {
             <tr>
                 <td>@user.Id</td>
-                <td>@user.GetType()</td>
+                <td>@user.Roles.Count</td>
                 <td>@user.Name</td>
                 <td>@user.UserName</td>
                 <td>@user.Password</td>

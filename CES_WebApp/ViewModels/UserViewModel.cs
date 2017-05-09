@@ -14,8 +14,7 @@ namespace CES_BLL.ViewModels
         [Required]
         public string Password { get; set; }
         [Required]
-        public Rank Rank { get; set; }
+        public string Rank { get; set; }
     }
 
-    public enum Rank  {Root, Teacher, Student}
 }
