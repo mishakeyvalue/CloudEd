@@ -8,9 +8,11 @@ namespace CES_DAL.Models.UsersEntities
 {
     public class AppUser : IdentityUser
     {
-
+        [Required]
         public string Name { get; set; }
-
+        [Required]
         public string Password { get; set; }
+        [Required]
+        public string Rank { get; set; }
     }
 }

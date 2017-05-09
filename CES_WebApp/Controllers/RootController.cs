@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CES_WebApp.Controllers
 {
-    
+    [Authorize(Roles = "root")]
     public class RootController : Controller
     {
         private UserManager<AppUser> _userManager;
@@ -19,12 +19,12 @@ namespace CES_WebApp.Controllers
 
 
 
-        public RootController(UserManager<AppUser> userManager,RoleManager<IdentityRole> roleManager)
+        public RootController(UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        
+
         public IActionResult Index()
         {
             return View(_userManager.Users);
@@ -37,22 +37,24 @@ namespace CES_WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(UserViewModel model)
         {
-            if (ModelState.IsValid) {
-                AppUser newUser = new AppUser() {Name = model.Name, UserName = model.Login, Password = model.Password };
-
-
-
+            if (ModelState.IsValid)
+            {
+                AppUser newUser = new AppUser() { Name = model.Name, UserName = model.Login, Password = model.Password, Rank = model.Rank };
                 IdentityResult result =
                     await _userManager.CreateAsync(newUser, model.Password);
-                if (result.Succeeded) {
-
+                if (result.Succeeded)
+                {
                     var roleResult = await _userManager.AddToRoleAsync(newUser, model.Rank);
-                    if(roleResult.Succeeded)
-                        return RedirectToAction("Index");
-                    return Content(AddErrorsFromResult(roleResult));
+                    if (roleResult.Succeeded)
+                        newUser.Rank = model.Rank;
+                        await _userManager.UpdateAsync(newUser);
+                   
+                    return RedirectToAction("Index");
                 }
-                else {
-                    foreach (IdentityError error in result.Errors) {
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
+                    {
                         ModelState.AddModelError("", error.Description);
                     }
                 }
@@ -64,17 +66,21 @@ namespace CES_WebApp.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             AppUser user = await _userManager.FindByIdAsync(id);
-            if (user != null) {
+            if (user != null)
+            {
                 IdentityResult result = await _userManager.DeleteAsync(user);
-                if (result.Succeeded) {
+                if (result.Succeeded)
+                {
                     return RedirectToAction("Index");
                 }
-                else {
+                else
+                {
                     addErrorsFromResult(result);
                 }
 
             }
-            else {
+            else
+            {
                 ModelState.AddModelError("", "User not found");
             }
             return View("Index", _userManager.Users);
@@ -84,10 +90,12 @@ namespace CES_WebApp.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             AppUser user = await _userManager.FindByIdAsync(id);
-            if (user != null) {
-                return View(user);
+            if (user != null)
+            {
+                return View(new UserViewModel(user));
             }
-            else {
+            else
+            {
                 return RedirectToAction("Index");
             }
         }
@@ -97,31 +105,41 @@ namespace CES_WebApp.Controllers
         {
             AppUser user = await _userManager.FindByIdAsync(id);
 
+
             var result = await _userManager.RemovePasswordAsync(user);
-            if (result.Succeeded)
+            if (!result.Succeeded) return Content(AddErrorsFromResult(result));
+
+            var r = await _userManager.AddPasswordAsync(user, model.Password);
+            if (!r.Succeeded) return Content(AddErrorsFromResult(r));
+
+            user.Password = model.Password;
+            user.Name = model.Name;
+            user.UserName = model.Login;
+            if(await _roleManager.RoleExistsAsync(model.Rank))
             {
-                var r = await _userManager.AddPasswordAsync(user, model.Password);
-
-                if (r.Succeeded)
+                //   IdentityRole role = await _roleManager.FindByNameAsync(model.Rank);
+                if (!_userManager.GetRolesAsync(user).Result.Contains(model.Rank))
                 {
-                    user.Password = model.Password;
-                    var updateResult = await _userManager.UpdateAsync(user);
-                    if (updateResult.Succeeded)
-                        return RedirectToAction("Index");
-                    else return Content(AddErrorsFromResult(updateResult));
+                    var roleRes = await _userManager.AddToRoleAsync(user, model.Rank);
+                    if (!roleRes.Succeeded) { return Content(AddErrorsFromResult(r)); }
+                    else user.Rank = model.Rank;
                 }
-
-                else return Content(AddErrorsFromResult(r));
-
             }
 
-            else return Content(AddErrorsFromResult(result));
+
+            var updateResult = await _userManager.UpdateAsync(user);
+            if (updateResult.Succeeded)
+                return RedirectToAction("Index");
+            else return Content(AddErrorsFromResult(updateResult));
+
+
 
         }
 
         private void addErrorsFromResult(IdentityResult result)
         {
-            foreach (IdentityError error in result.Errors) {
+            foreach (IdentityError error in result.Errors)
+            {
                 ModelState.AddModelError("", error.Description);
             }
         }
