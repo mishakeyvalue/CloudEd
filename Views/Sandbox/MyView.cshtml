@@ -1,0 +1,31 @@
+@model CES.Models.QuestionViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h2>View</h2>
+    
+<form asp-action="View">
+    <div class="form-horizontal">
+        <h4>@Model.Body</h4>
+        <hr />
+        <input type="hidden" name="QuestionId" value="42" />
+        @foreach (var answer in Model.Answers)
+        {
+            <label>@answer?.Body</label>
+            <input type="radio" name="AnswerId" value="@answer?.Id" />
+        }
+
+        <input type="submit"  value="Submit" />
+
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
