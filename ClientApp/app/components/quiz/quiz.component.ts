@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 })
 export class QuizComponent {
 
-    public quizBody: string = "";
+    public questionBody: string = "";
 
     constructor() {
 

@@ -1,8 +1,8 @@
-<form>
+<div >
     <div class="form-control">
-        <input type="text" name="questionBody" value="" />
+        <input [(ngModel)]="name" />
 
         <button class="btn btn-primary" (click)="test()">Create question</button>
     </div>
-    {{questionBody}}
-</form>
+    {{ name}}
+</div>
