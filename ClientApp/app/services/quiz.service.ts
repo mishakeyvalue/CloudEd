@@ -17,7 +17,14 @@ export class QuizService {
                     title: "ASP.NET basics",
                     description: "It wiil help you test your knowledge of the robust and powerfull web development tool!",
                     questions: this.stubbedQuestions
-                }
+                },
+                {
+                    id: "dotnet-quiz",
+                    title: "Another ASP.NET basics",
+                    description: "It wiil help you test your knowledge of the robust and powerfull web development tool!",
+                    questions: this.stubbedQuestions
+                },
+
             ];
     }
 

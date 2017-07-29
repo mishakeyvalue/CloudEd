@@ -1,5 +1,12 @@
 <div>
-    <div *ngIf="quiz">
+    <h1>{{ welcomeMessage }}</h1>
+    
+    <div class="from-group">
+        <select [(ngModel)]="currentQuizId" (change)="loadQuiz(currentQuizId)" class="from-control">
+            <option *ngFor="let quiz of quizes" value="{{quiz.id}}"> {{ quiz.title }} </option>
+        </select>
+    </div>
+    <div *ngIf="isQuizStarted">
         Quiz is here!
     </div>
 </div>
