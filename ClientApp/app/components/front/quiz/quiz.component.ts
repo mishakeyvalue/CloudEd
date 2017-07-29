@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
-import { QuizService } from './../../services/quiz.service';
+import { QuizService } from './../../../services/quiz.service';
 
 @Component({
-    selector: 'quiz',
+    selector: 'my-quiz',
     templateUrl: './quiz.component.html',
     providers: [QuizService]
 })
