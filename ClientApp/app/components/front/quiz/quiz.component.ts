@@ -35,4 +35,8 @@ export class QuizComponent implements OnInit {
         this.isQuizStarted = true;
         this.currentQuiz = this.quizes.find((q) => q.id === currentQuizId);
     }
+
+    public parentEventPropagation(): void {
+        alert()
+    }
 }
