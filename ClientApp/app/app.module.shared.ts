@@ -6,8 +6,12 @@ import { AppComponent } from './components/main/app/app.component'
 import { NavMenuComponent } from './components/main/navmenu/navmenu.component';
 import { HomeComponent } from './components/main/home/home.component';
 import { FetchDataComponent } from './components/front/fetchdata/fetchdata.component';
+
 import { QuizComponent } from './components/front/quiz/quiz.component';
 import { QuestionComponent } from './components/front/question/question.component';
+
+import { QuizBuilderComponent } from './components/backoffice/quizBuilder/quizBuilder.component';
+import { QuestionBuilderComponent } from './components/backoffice/questionBuilder/questionBuilder.component';
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -16,13 +20,16 @@ export const sharedConfig: NgModule = {
         NavMenuComponent,
         FetchDataComponent,
         HomeComponent,
-        QuestionComponent,
         QuizComponent,
+        QuestionComponent,
+        QuizBuilderComponent,
+        QuestionBuilderComponent,
     ],
     imports: [
         RouterModule.forRoot([
             { path: '', redirectTo: 'home', pathMatch: 'full' },
             { path: 'home', component: HomeComponent },
+            { path: 'backoffice', component: QuizBuilderComponent },
             { path: 'fetch-data', component: FetchDataComponent },
             { path: 'quiz', component: QuizComponent},
             { path: '**', redirectTo: 'home' }

@@ -1,0 +1,10 @@
+<div>
+    <h3>{{ question.title }}</h3>
+    
+    <div>
+        <div *ngFor="let option Of question.answers">
+            <label [for]="option.id">{{ option.body }}</label>
+            <input [id]="option.id" type="checkbox" [(ngModel)]="option.isSelected" (change)="doAnswer(option)" [value]="option.body" />
+        </div>
+    </div>
+</div>
