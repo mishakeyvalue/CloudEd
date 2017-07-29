@@ -1,17 +1,21 @@
 <div>
     <h1>{{ welcomeMessage }}</h1>
-    
-    <div class="from-group">
-        <select [(ngModel)]="currentQuizId" (change)="loadQuiz(currentQuizId)" class="from-control">
-            <option *ngFor="let quiz of quizes" [value]="quiz.id" > {{ quiz.title }} </option>
-        </select>
-    </div>
-    <div *ngIf="isQuizStarted">
-        {{ currentQuiz.id }}
-        <table>
-            <tr *ngFor="let question of currentQuiz.questions">
-                <my-question [question]="question"></my-question>
-            </tr>
-        </table>
+    <label>Choose quiz to edit: </label>
+    <select class="form-control">
+        <option value="new">Create new quiz</option>
+        <option *ngFor="let quizToEdit of quizesToEdit"></option>
+    </select>
+    <div class="form-group">
+        <h3>New quiz goes here: </h3>
+        <div>
+            <label>Title: </label>
+            <div>
+                <input class="left" type="text" placeholder="Your title.." value="" [(ngModel)]="quizToCreate.title" />
+            </div>
+        </div>
+        <div>
+            <label>Description: </label>
+            <textarea class="form-control" rows="5" [(ngModel)]="quizToCreate.description"></textarea>
+        </div>        
     </div>
 </div>
