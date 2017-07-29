@@ -24,11 +24,7 @@ export class QuizBuilderComponent implements OnInit {
     }
 
     get welcomeMessage(): string {
-        return "Welcome to our cloud quiz application!";
-    }
-
-    get bananaTest(): string {
-        return this.quizService.greeting;
+        return "It's your backoffice. Here you can manage your quizes!";
     }
 
     public loadQuiz(currentQuizId: string): void {
