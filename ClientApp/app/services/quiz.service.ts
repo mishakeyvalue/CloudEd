@@ -19,7 +19,7 @@ export class QuizService {
                     questions: this.stubbedQuestions
                 },
                 {
-                    id: "dotnet-quiz",
+                    id: "potato",
                     title: "Another ASP.NET basics",
                     description: "It wiil help you test your knowledge of the robust and powerfull web development tool!",
                     questions: this.stubbedQuestions

@@ -1,27 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-import { QuizService } from './../../../services/quiz.service';
+import { Question } from './../../../models/question';
+import { Answer } from './../../../models/answer';
 
-import { Quiz } from './../../../models/quiz'
 
 @Component({
     selector: 'my-question',
-    templateUrl: './quiz.component.html',
-    providers: [QuizService]
+    templateUrl: './question.component.html',
 })
-export class QuizComponent implements OnInit {
-
-    public quiz: Quiz;
-
-    
-
-    constructor(private quizService: QuizService) { }
-
-    ngOnInit(): void {
-        this.quiz = this.quizService.getAll()[0]
-    }
-
-    get bananaTest(): string {
-        return this.quizService.greeting;
-    }
+export class QuestionComponent {
+    @Input() public question: Question;   
 }

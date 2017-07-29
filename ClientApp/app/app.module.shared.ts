@@ -7,6 +7,7 @@ import { NavMenuComponent } from './components/main/navmenu/navmenu.component';
 import { HomeComponent } from './components/main/home/home.component';
 import { FetchDataComponent } from './components/front/fetchdata/fetchdata.component';
 import { QuizComponent } from './components/front/quiz/quiz.component';
+import { QuestionComponent } from './components/front/question/question.component';
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -15,6 +16,7 @@ export const sharedConfig: NgModule = {
         NavMenuComponent,
         FetchDataComponent,
         HomeComponent,
+        QuestionComponent,
         QuizComponent,
     ],
     imports: [

@@ -3,10 +3,15 @@
     
     <div class="from-group">
         <select [(ngModel)]="currentQuizId" (change)="loadQuiz(currentQuizId)" class="from-control">
-            <option *ngFor="let quiz of quizes" value="{{quiz.id}}"> {{ quiz.title }} </option>
+            <option *ngFor="let quiz of quizes" [value]="quiz.id" > {{ quiz.title }} </option>
         </select>
     </div>
     <div *ngIf="isQuizStarted">
-        Quiz is here!
+        {{ currentQuiz.id }}
+        <table>
+            <tr *ngFor="let question of currentQuiz.questions">
+                <my-question [question]="question"></my-question>
+            </tr>
+        </table>
     </div>
 </div>
