@@ -1,3 +1,4 @@
 ﻿export class Answer {
-    public id: number;    
+    public id: string;
+    public body: string;
 }
