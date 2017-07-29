@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudEd.Web", "CloudEd.Web\CloudEd.Web.csproj", "{C2F51532-D25F-4787-90F8-0B6455F346ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudEd.DAL", "Clouded.DAL\CloudEd.DAL.csproj", "{16E7F71B-1C1D-4E69-8EB0-90B1E3AC8BC4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CloudEd.Tests", "CloudEd.Tests\CloudEd.Tests\CloudEd.Tests.csproj", "{DD493F10-743B-4E31-911E-58590989BDB7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2F51532-D25F-4787-90F8-0B6455F346ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2F51532-D25F-4787-90F8-0B6455F346ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2F51532-D25F-4787-90F8-0B6455F346ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2F51532-D25F-4787-90F8-0B6455F346ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16E7F71B-1C1D-4E69-8EB0-90B1E3AC8BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16E7F71B-1C1D-4E69-8EB0-90B1E3AC8BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16E7F71B-1C1D-4E69-8EB0-90B1E3AC8BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16E7F71B-1C1D-4E69-8EB0-90B1E3AC8BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD493F10-743B-4E31-911E-58590989BDB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD493F10-743B-4E31-911E-58590989BDB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD493F10-743B-4E31-911E-58590989BDB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD493F10-743B-4E31-911E-58590989BDB7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
