@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import { Question } from './../../../models/question';
-import { Answer } from './../../../models/answer';
+import { QuestionViewModel } from './../../../models/questionViewModel';
+import { AnswerViewModel } from './../../../models/answerViewModel';
 
 
 @Component({
@@ -9,16 +9,16 @@ import { Answer } from './../../../models/answer';
     templateUrl: './question.component.html',
 })
 export class QuestionComponent {
-    @Input() public question: Question;
-    @Output() onAnswered = new EventEmitter<Question>();
+    @Input() public question: QuestionViewModel;
+    @Output() onAnswered = new EventEmitter<QuestionViewModel>();
 
-    public doAnswer(answer: Answer): void {
+    public doAnswer(answer: AnswerViewModel): void {
         this.deselectOthers(answer);
         this.question.selectedAnswer = answer;
         this.onAnswered.emit(this.question);
     }
 
-    private deselectOthers(answer: Answer): void {
+    private deselectOthers(answer: AnswerViewModel): void {
         this.question.answers.forEach(el => {
             console.log('Trying to deselect ' + el.id + ' cause of ' + answer.id)
             if (el.id !== answer.id)

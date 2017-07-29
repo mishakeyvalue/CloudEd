@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { Quiz } from './../models/quiz'
-import { Question } from './../models/question'
-import { Answer } from './../models/answer'
+import { QuizViewModel } from './../models/quizViewModel';
+import { QuestionViewModel } from './../models/questionViewModel'
+import { AnswerViewModel } from './../models/answerViewModel'
 
 @Injectable()
 export class QuizService {
-    private stubbedQuizez: Quiz[];
+    private stubbedQuizez: QuizViewModel[];
     public greeting: string = "Hello from my service!";
 
     constructor() {
@@ -28,12 +28,12 @@ export class QuizService {
             ];
     }
 
-    public getAll(): Quiz[] {
+    public getAll(): QuizViewModel[] {
         return this.stubbedQuizez;
     }
 
-    get stubbedQuestions(): Question[] {
-        let stub: Question[] =
+    get stubbedQuestions(): QuestionViewModel[] {
+        let stub: QuestionViewModel[] =
             [
                 {
                     id: this.randomId,
