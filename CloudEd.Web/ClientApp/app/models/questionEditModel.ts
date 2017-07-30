@@ -1,4 +1,4 @@
-﻿import { AnswerEditModel } from './nswerEditModel';
+﻿import { AnswerEditModel } from './answerEditModel';
 
 export class QuestionEditModel {
     public id: string;
