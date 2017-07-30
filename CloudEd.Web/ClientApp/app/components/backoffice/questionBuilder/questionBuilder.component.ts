@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 
 import { HelperService } from "../../../services/helper.service";
 
@@ -13,28 +14,20 @@ import { AnswerEditModel } from './../../../models/answerEditModel';
 export class QuestionBuilderComponent implements OnInit {
     ngOnInit(): void {
         this.answers = this.question.answers;
+    }
 
-        }
 
     @Input() public question: QuestionEditModel;
-    @Output() questionChange = new EventEmitter<QuestionEditModel>();
     public answers: AnswerEditModel[];
 
     constructor(private helperService: HelperService) {
     }
 
     public addAnswer(): void {
-        console.log(this.question);
-        let newAnswer = new AnswerEditModel();
-        newAnswer.body = 'Banana';
-        newAnswer.id = this.helperService.undefinedId;
-        this.question.answers.push(newAnswer);
-        this.questionChange.emit(this.question);
-        console.log(this.question)
+
     }
 
     public change(newValue): void {
-        alert(newValue)
-        this.questionChange.emit(this.question);
+
     }
 }

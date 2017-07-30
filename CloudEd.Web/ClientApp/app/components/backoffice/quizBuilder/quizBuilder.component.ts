@@ -25,6 +25,7 @@ export class QuizBuilderComponent implements OnInit {
         let newQuiz: QuizEditModel = new QuizEditModel();
         newQuiz.title = 'Your very new quiz';
         newQuiz.id = this.helperService.undefinedId;
+        newQuiz.questions = [this.defaultNewQuestion];
         return newQuiz;
     }
 
