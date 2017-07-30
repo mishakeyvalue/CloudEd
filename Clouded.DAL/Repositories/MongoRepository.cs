@@ -3,10 +3,10 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Clouded.DAL.Persistence;
+using CloudEd.DAL.Persistence;
 using System.Threading.Tasks;
 
-namespace Clouded.DAL.Repositories
+namespace CloudEd.DAL.Repositories
 {
     public class MongoRepository<TEntity, TIdentifier> : IRepository<TEntity, TIdentifier> where TEntity : class, IEntity<TIdentifier>
     {

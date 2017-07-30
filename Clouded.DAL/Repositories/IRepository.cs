@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Clouded.DAL.Persistence;
+using CloudEd.DAL.Persistence;
 
-namespace Clouded.DAL.Repositories
+namespace CloudEd.DAL.Repositories
 {
     public interface IRepository<TEntity, TIdentifier> where TEntity : class, IEntity<TIdentifier>
     {

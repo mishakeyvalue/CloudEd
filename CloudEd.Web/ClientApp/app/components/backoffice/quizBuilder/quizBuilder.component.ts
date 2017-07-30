@@ -10,7 +10,7 @@ import { AnswerEditModel } from "../../../models/answerEditModel";
 @Component({
     selector: 'my-quiz-builder',
     templateUrl: './quizBuilder.component.html',
-    providers: [QuizBackofficeService]
+    providers: [QuizBackofficeService, HelperService]
 })
 export class QuizBuilderComponent implements OnInit {
     public quizesToEdit: QuizEditModel[];
@@ -37,7 +37,12 @@ export class QuizBuilderComponent implements OnInit {
     }
 
     private get defaultNewQuestionAnswers(): AnswerEditModel[] {
-        
+        let result: AnswerEditModel[] =
+            [
+                { id: this.helperService.undefinedId, body: '42' },
+                { id: this.helperService.undefinedId, body: 'Potato' },
+            ]
+        return result;
     }
 
     constructor(private quizBackofficeService: QuizBackofficeService,

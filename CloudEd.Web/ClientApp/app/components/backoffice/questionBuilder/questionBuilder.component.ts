@@ -1,28 +1,40 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
-import { QuestionViewModel } from './../../../models/questionViewModel';
-import { AnswerViewModel } from './../../../models/answerViewModel';
+import { HelperService } from "../../../services/helper.service";
 
+import { QuestionEditModel } from './../../../models/questionEditModel';
+import { AnswerEditModel } from './../../../models/answerEditModel';
 
 @Component({
     selector: 'my-question-builder',
     templateUrl: './questionBuilder.component.html',
+    providers: [HelperService]
 })
-export class QuestionBuilderComponent {
-    @Input() public question: QuestionViewModel;
-    @Output() onAnswered = new EventEmitter<QuestionViewModel>();
+export class QuestionBuilderComponent implements OnInit {
+    ngOnInit(): void {
+        this.answers = this.question.answers;
 
-    public doAnswer(answer: AnswerViewModel): void {
-        this.deselectOthers(answer);
-        this.question.selectedAnswer = answer;
-        this.onAnswered.emit(this.question);
+        }
+
+    @Input() public question: QuestionEditModel;
+    @Output() questionChange = new EventEmitter<QuestionEditModel>();
+    public answers: AnswerEditModel[];
+
+    constructor(private helperService: HelperService) {
     }
 
-    private deselectOthers(answer: AnswerViewModel): void {
-        this.question.answers.forEach(el => {
-            console.log('Trying to deselect ' + el.id + ' cause of ' + answer.id)
-            if (el.id !== answer.id)
-                el.isSelected = false;
-        });
+    public addAnswer(): void {
+        console.log(this.question);
+        let newAnswer = new AnswerEditModel();
+        newAnswer.body = 'Banana';
+        newAnswer.id = this.helperService.undefinedId;
+        this.question.answers.push(newAnswer);
+        this.questionChange.emit(this.question);
+        console.log(this.question)
+    }
+
+    public change(newValue): void {
+        alert(newValue)
+        this.questionChange.emit(this.question);
     }
 }

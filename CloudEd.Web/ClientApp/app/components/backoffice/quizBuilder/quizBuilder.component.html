@@ -7,17 +7,22 @@
     <h4>
         Number of questions in your quiz: {{ selectedQuiz.questions?.length}}
     </h4>
-    <div class="form-group">
-        <div>
-            <label>Title: </label>
+    <form>
+
+        <div class="form-group">
             <div>
-                <input class="left" type="text" placeholder="Your title.." [(ngModel)]="selectedQuiz.title" [value]="selectedQuiz.title" />
+                <label>Title: </label>
+                <div>
+                    <input class="left" type="text" placeholder="Your title.." [(ngModel)]="selectedQuiz.title" name="title" />
+                    {{ selectedQuiz.title }}
+                </div>
+            </div>
+            <div>
+                <label>Description: </label>
+                <textarea class="form-control" rows="5" [(ngModel)]="selectedQuiz.description" name="description"></textarea>
             </div>
         </div>
-        <div>
-            <label>Description: </label>
-            <textarea class="form-control" rows="5" [(ngModel)]="selectedQuiz.description"></textarea>
-        </div>   
-    </div>
-    <button class="btn btn-success" (click)="saveQuiz(selectedQuizId)">Save</button>
+        <button class="btn btn-success" (click)="saveQuiz(selectedQuizId)">Save description</button>
+    </form>
+
 </div>

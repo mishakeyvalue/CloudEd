@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using CloudEd.DAL.Repositories;
+using CloudEd.DAL.Persistence;
 
 namespace CES
 {
@@ -28,7 +30,11 @@ namespace CES
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = Configuration.GetConnectionString("mongo");
             // Add framework services.
+            var mongoRepository = new MongoRepository<Quiz, Guid>(connectionString);
+
+            services.AddSingleton<IRepository<Quiz, Guid>>(mongoRepository);
             services.AddMvc();
         }
 

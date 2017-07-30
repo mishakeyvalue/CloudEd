@@ -1,4 +1,4 @@
-﻿namespace Clouded.DAL.Persistence
+﻿namespace CloudEd.DAL.Persistence
 {
     public interface IEntity<TIdentifier>
     {
