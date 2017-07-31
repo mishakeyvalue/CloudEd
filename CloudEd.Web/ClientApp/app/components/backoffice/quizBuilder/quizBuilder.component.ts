@@ -51,7 +51,13 @@ export class QuizBuilderComponent implements OnInit {
     { }
 
     ngOnInit(): void {
-        this.quizesToEdit = this.quizBackofficeService.getAll();
+        this.quizesToEdit = [];
+        this.quizBackofficeService.quizes.then((d => {
+            let res = d;
+            this.quizesToEdit = res;
+            console.log('Banana!')
+            console.log(res);
+        }));
         let newQuiz = this.quizToCreate;
         this.selectedQuiz = newQuiz;
         this.selectedQuizId = newQuiz.id;
