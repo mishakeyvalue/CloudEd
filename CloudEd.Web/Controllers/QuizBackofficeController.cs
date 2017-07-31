@@ -1,32 +1,33 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
-using CloudEd.DAL.Repositories;
-using CloudEd.DAL.Persistence;
 using System.Collections.Generic;
+using CloudEd.BLL.Core.Quiz.Services;
+using CloudEd.BLL.Core.Quiz.Models;
 
 namespace CES.Controllers
 {
     [Route("api/[controller]")]
-    public class QuizBackofficeController : Controller
+    public class BackofficeController : Controller
     {
-        private readonly IRepository<Quiz, Guid> _repository;
+        private readonly IQuizBackofficeService _quizBackofficeService;
 
-        public QuizBackofficeController(IRepository<Quiz, Guid> repository)
+        public BackofficeController(IQuizBackofficeService quizBackofficeService)
         {
-            _repository = repository;
-        }
-        [HttpPost("[action]")]
-        public IActionResult Quiz(Quiz quiz)
-        {
-            quiz.Id = Guid.NewGuid();
-            _repository.Save(quiz);
-            return Ok();
+            _quizBackofficeService = quizBackofficeService;
         }
 
-        public IEnumerable<Quiz> Quizes()
+        [HttpGet("[action]")]
+        public IEnumerable<QuizEditModel> Quiz()
         {
-            var result = _repository.GetAll();
+            var result = _quizBackofficeService.GetAll();
             return result;
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult Quiz([FromBody] QuizEditModel editModel)
+        {
+            _quizBackofficeService.Save(editModel);
+            return Ok();
         }
     }
 }

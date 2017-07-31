@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { HelperService } from "./helper.service";
@@ -8,25 +8,32 @@ import { QuestionEditModel } from './../models/questionEditModel';
 import { AnswerEditModel } from './../models/answerEditModel';
 
 @Injectable()
-export class QuizBackofficeService {
+export class QuizBackofficeService implements OnInit {
+    public get quizes(): QuizEditModel[] {
+    }
+    ;
+
+
     private stubbedQuizez: QuizEditModel[] = [];
     public greeting: string = "Hello from my service!";
 
     constructor(private http: Http,
         private helperService: HelperService,
-        @Inject('ORIGIN_URL') private originUrl: string, )
-    {
+        @Inject('ORIGIN_URL') private originUrl: string, ) {
         let newQuiz = new QuizEditModel();
         newQuiz.title = 'Sample Quiz';
         newQuiz.id = 'ij1234iji-asf;kdlj234-kmfasdw3';
         this.stubbedQuizez.push(newQuiz);
+
+    }
+
+    public ngOnInit(): void {
     }
 
     public getAll(): QuizEditModel[] {
-        return this.stubbedQuizez;
+        return this.quizes;
     }
-
     public save(quiz: QuizEditModel): void {
-        this.http.post(this.originUrl + '/api/QuizBackoffice/Quiz', quiz).subscribe(res => console.log(res));
+        this.http.post(this.originUrl + '/api/Backoffice/Quiz', quiz).subscribe(res => console.log(res));
     };
 }

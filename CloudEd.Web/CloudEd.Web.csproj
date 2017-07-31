@@ -28,7 +28,7 @@
     <Content Remove="ClientApp\**" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Clouded.DAL\CloudEd.DAL.csproj" />
+    <ProjectReference Include="..\CloudEd.BLL\CloudEd.BLL.csproj" />
   </ItemGroup>
   <Target Name="RunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->

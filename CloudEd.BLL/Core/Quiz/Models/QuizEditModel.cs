@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace CloudEd.DAL.Persistence
+namespace CloudEd.BLL.Core.Quiz.Models
 {
-    public class Quiz : IEntity<Guid>
+    public class QuizEditModel
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public IEnumerable<Guid> QuestionIds { get; set; }
     }
 }

@@ -23,6 +23,6 @@
         </div>
         <button class="btn btn-success" (click)="saveQuiz(selectedQuizId)">Save description</button>
     </form>
-    {{selectedQuiz | json}}
+    {{selectedQuiz | json   }}
     <my-question-builder *ngFor="let question of selectedQuiz.questions" [question]="question"></my-question-builder>
 </div>
