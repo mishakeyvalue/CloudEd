@@ -7,5 +7,6 @@ namespace CloudEd.BLL.Core.Quiz.Services
     {
         IEnumerable<QuizEditModel> GetAll();
         void Save(QuizEditModel quiz);
+        void Create(QuizCreateModel quiz);
     }
 }

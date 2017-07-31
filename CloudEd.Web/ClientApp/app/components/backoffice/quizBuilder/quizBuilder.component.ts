@@ -53,10 +53,8 @@ export class QuizBuilderComponent implements OnInit {
     ngOnInit(): void {
         this.quizesToEdit = [];
         this.quizBackofficeService.quizes.then((d => {
-            let res = d;
-            this.quizesToEdit = res;
-            console.log('Banana!')
-            console.log(res);
+            d.push(this.quizToCreate);
+            this.quizesToEdit = d;            
         }));
         let newQuiz = this.quizToCreate;
         this.selectedQuiz = newQuiz;
@@ -66,7 +64,11 @@ export class QuizBuilderComponent implements OnInit {
 
     public saveQuiz(quizId: string): void {
         let quiz = this.quizesToEdit.find(q => q.id == quizId);
-        this.quizBackofficeService.save(quiz);
+
+        if (this.helperService.isNewEntity(quizId))
+            this.quizBackofficeService.create(quiz);
+        else
+            this.quizBackofficeService.save(quiz);
     }
 
     public loadQuiz(selectedQuizId: string): void {

@@ -23,10 +23,17 @@ namespace CES.Controllers
             return result;
         }
 
-        [HttpPost("[action]")]
+        [HttpPut("[action]")]
         public IActionResult Quiz([FromBody] QuizEditModel editModel)
         {
             _quizBackofficeService.Save(editModel);
+            return Ok();
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult Quiz([FromBody] QuizCreateModel createModel)
+        {
+            _quizBackofficeService.Create(createModel);
             return Ok();
         }
     }

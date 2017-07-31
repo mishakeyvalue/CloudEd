@@ -30,6 +30,22 @@ namespace CloudEd.BLL.Core.Quiz.Services
             _quizRepository.Save(persistenceEntity);
         }
 
+        public void Create(QuizCreateModel createModel)
+        {
+            _quizRepository.Add(MapQuizCreateModelToPersistence(createModel));
+        }
+
+        private DAL.Persistence.Quiz MapQuizCreateModelToPersistence(QuizCreateModel createModel)
+        {
+            return new DAL.Persistence.Quiz()
+            {
+                Id = Guid.NewGuid(),
+                Title = createModel.Title,
+                Description = createModel.Description,
+                QuestionIds = Enumerable.Empty<Guid>()
+            };
+        }
+
         private QuizEditModel MapQuizToEditModel(DAL.Persistence.Quiz quiz)
         {
             return new QuizEditModel()

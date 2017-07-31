@@ -11,7 +11,7 @@ import { AnswerEditModel } from './../models/answerEditModel';
 
 
 @Injectable()
-export class QuizBackofficeService implements OnInit {
+export class QuizBackofficeService {
 
     public get quizes(): Promise<QuizEditModel[]> {
         return this.http.get(this.originUrl + '/api/Backoffice/Quiz')
@@ -38,13 +38,14 @@ export class QuizBackofficeService implements OnInit {
 
     }
 
-    public ngOnInit(): void {
-    }
-
     public getAll(): QuizEditModel[] {
         return [];
     }
     public save(quiz: QuizEditModel): void {
-        this.http.post(this.originUrl + '/api/Backoffice/Quiz', quiz).subscribe(res => console.log(res));
+        this.http.put(this.originUrl + '/api/Backoffice/Quiz', quiz).subscribe(res => console.log(res));
     };
+
+    public create(quiz: QuizEditModel): void {
+        this.http.post(this.originUrl + '/api/Backoffice/Quiz', quiz).subscribe(res => console.log(res));
+    }
 }
