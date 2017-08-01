@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angular/core';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 
 import { HelperService } from "../../../services/helper.service";
 
@@ -11,16 +11,23 @@ import { AnswerEditModel } from './../../../models/answerEditModel';
     templateUrl: './questionBuilder.component.html',
     providers: [HelperService]
 })
-export class QuestionBuilderComponent implements OnInit {
+export class QuestionBuilderComponent implements OnInit, OnChanges {
+    ngOnChanges(): void {
+        this.questionForm.reset({
+            title: this.question.title
+        })
+    }
+
     ngOnInit(): void {
-        this.answers = this.question.answers;
     }
 
 
     @Input() public question: QuestionEditModel;
-    public answers: AnswerEditModel[];
+    public questionForm: FormGroup;
 
-    constructor(private helperService: HelperService) {
+    constructor(private helperService: HelperService,
+        private fb: FormBuilder) {
+        this.createForm();
     }
 
     public addAnswer(): void {
@@ -29,5 +36,11 @@ export class QuestionBuilderComponent implements OnInit {
 
     public change(newValue): void {
 
+    }
+
+    private createForm(): void {
+        this.questionForm = this.fb.group({
+            title: this.question.title,
+        });
     }
 }

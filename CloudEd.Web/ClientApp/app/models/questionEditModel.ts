@@ -5,4 +5,5 @@ export class QuestionEditModel {
     public title: string;
     public answers: AnswerEditModel[];
     public correctAnswer: AnswerEditModel;
+    public quizIds: string[];
 }
