@@ -4,6 +4,7 @@ using System;
 using CloudEd.BLL.Core.Quiz.Models;
 using System.Collections.Generic;
 using System.Linq;
+using CloudEd.BLL.Core.Question.Models;
 
 namespace CloudEd.BLL.Core.Quiz.Services
 {
@@ -42,7 +43,7 @@ namespace CloudEd.BLL.Core.Quiz.Services
                 Id = Guid.NewGuid(),
                 Title = createModel.Title,
                 Description = createModel.Description,
-                QuestionIds = Enumerable.Empty<Guid>()
+                Questions = Enumerable.Empty<DAL.Persistence.Question>()
             };
         }
 
@@ -52,8 +53,35 @@ namespace CloudEd.BLL.Core.Quiz.Services
             {
                 Id = quiz.Id,
                 Title = quiz.Title,
-                Description = quiz.Description
+                Description = quiz.Description,
+                Questions = quiz.Questions.Select(MapQuestionPersistnenceToEditModel)
             };
         }
+
+        private QuestionEditModel MapQuestionPersistnenceToEditModel(DAL.Persistence.Question question)
+        {
+            Guid correctAnswerId = question.CorrectAnswer.Id;
+            return new QuestionEditModel()
+            {
+                Id = question.Id,
+                Title = question.Title,
+                Answers = question.Answers.Select(MapAnswerPersistenceToEditModel)
+            };
+
+            AnswerEditModel MapAnswerPersistenceToEditModel(DAL.Persistence.Question.Answer answer)
+            {
+                return new AnswerEditModel()
+                {
+                    Id = answer.Id,
+                    Body = answer.Body,
+                    IsCorrect = IsCorrectAnswer(answer)
+                };
+
+                bool IsCorrectAnswer(DAL.Persistence.Question.Answer answ) => answ.Id == correctAnswerId;
+                
+            }
+        }
+
+
     }
 }
