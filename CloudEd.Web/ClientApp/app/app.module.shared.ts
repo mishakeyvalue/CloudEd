@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './components/main/app/app.component'
 import { NavMenuComponent } from './components/main/navmenu/navmenu.component';
@@ -34,6 +34,8 @@ export const sharedConfig: NgModule = {
             { path: 'quiz', component: QuizComponent},
             { path: '**', redirectTo: 'home' }
         ]),
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule
+        
     ]
 };

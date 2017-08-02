@@ -1,3 +1,18 @@
 <div class="row">
-    <h3>New question</h3>
+    <h3>question</h3>
 </div>
+<form [formGroup]="questionForm">
+    <div class="well well-lg">
+        <input class="form-control" formControlName="title" />
+        <div formArrayName="answers">
+            <div class="input-group" *ngFor="let answer of answers.controls; let i=index;" [formGroupName]="i">
+                <span class="input-group-addon">#{{i}}</span>
+                <span class="input-group-addon">
+                    <input type="checkbox" formControlName="isCorrect">
+                </span>
+                <input class="form-control" formControlName="body" />
+            </div>
+        </div>
+        <button class="btn btn-info" (click)="addAnswer()">Add answer</button>
+    </div>
+</form>

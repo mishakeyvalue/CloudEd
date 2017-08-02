@@ -40,8 +40,8 @@ export class QuizBuilderComponent implements OnInit {
     private get defaultNewQuestionAnswers(): AnswerEditModel[] {
         let result: AnswerEditModel[] =
             [
-                { id: this.helperService.undefinedId, body: '42' },
-                { id: this.helperService.undefinedId, body: 'Potato' },
+                { id: this.helperService.undefinedId, body: '42',isCorrect: true },
+                { id: this.helperService.undefinedId, body: 'Potato',isCorrect: false },
             ]
         return result;
     }
