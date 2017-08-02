@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnChanges } from '@angu
 import { FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 import { HelperService } from "../../../services/helper.service";
+import { QuestionBackofficeService } from "../../../services/questionBackoffice.service";
 
 import { QuestionEditModel } from './../../../models/questionEditModel';
 import { AnswerEditModel } from './../../../models/answerEditModel';
@@ -9,7 +10,7 @@ import { AnswerEditModel } from './../../../models/answerEditModel';
 @Component({
     selector: 'my-question-builder',
     templateUrl: './questionBuilder.component.html',
-    providers: [HelperService, FormBuilder]
+    providers: [HelperService, FormBuilder, QuestionBackofficeService]
 })
 export class QuestionBuilderComponent implements OnInit, OnChanges {
     private readonly answersControlKey: string = 'answers';
@@ -20,8 +21,11 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
 
     public questionForm: FormGroup;
 
-    constructor(private helperService: HelperService,
-        private fb: FormBuilder) {
+    constructor(
+        private helperService: HelperService,
+        private fb: FormBuilder,
+        private questionBackofficeService: QuestionBackofficeService
+    ) {
     }
 
     ngOnChanges(): void {
@@ -83,6 +87,13 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
         let newAnswer = this.sampleAnswer;
         this.question.answers.push(newAnswer);
         this.ngOnChanges();
+    }
+
+    public saveQuestion(): void {
+        console.log(this.question)
+        this.helperService.isNewEntity(this.question.id)
+            ? this.questionBackofficeService.create(this.question)
+            : this.questionBackofficeService.save(this.question);
     }
 
     private get sampleAnswer(): AnswerEditModel {

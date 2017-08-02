@@ -2,6 +2,8 @@
     <h3>question</h3>
 </div>
 <form [formGroup]="questionForm">
+    <button class="btn btn-success pull-right" (click)="saveQuestion()">Save question</button>
+
     <div class="well well-lg">
         <input class="form-control" formControlName="title" />
         <div formArrayName="answers">
@@ -13,6 +15,6 @@
                 <input class="form-control" formControlName="body" />
             </div>
         </div>
-        <button class="btn btn-info" (click)="addAnswer()">Add answer</button>
+        <button class="btn btn-info btn-block" (click)="addAnswer()">Add answer</button>
     </div>
 </form>

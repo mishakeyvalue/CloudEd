@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using CloudEd.BLL.Core.Quiz.Services;
 using CloudEd.BLL.Core.Quiz.Models;
+using CloudEd.BLL.Core.Question.Models;
+using CloudEd.BLL.Core.Question.Services;
 
 namespace CES.Controllers
 {
@@ -10,10 +12,14 @@ namespace CES.Controllers
     public class BackofficeController : Controller
     {
         private readonly IQuizBackofficeService _quizBackofficeService;
+        private readonly IQuestionBackofficeService _questionBackofficeService;
 
-        public BackofficeController(IQuizBackofficeService quizBackofficeService)
+        public BackofficeController(
+            IQuizBackofficeService quizBackofficeService,
+            IQuestionBackofficeService questionBackofficeService)
         {
             _quizBackofficeService = quizBackofficeService;
+            _questionBackofficeService = questionBackofficeService;
         }
 
         [HttpGet("[action]")]
@@ -34,6 +40,27 @@ namespace CES.Controllers
         public IActionResult Quiz([FromBody] QuizCreateModel createModel)
         {
             _quizBackofficeService.Create(createModel);
+            return Ok();
+        }
+
+        [HttpGet("[action]")]
+        public IEnumerable<QuizEditModel> Question()
+        {
+            var result = _quizBackofficeService.GetAll();
+            return result;
+        }
+
+        [HttpPut("[action]")]
+        public IActionResult Question([FromBody] QuestionEditModel editModel)
+        {
+            _questionBackofficeService.Save(editModel);
+            return Ok();
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult Question([FromBody] QuestionCreateModel createModel)
+        {
+            _questionBackofficeService.Create(createModel);
             return Ok();
         }
     }

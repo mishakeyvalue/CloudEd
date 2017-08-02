@@ -32,6 +32,7 @@ export class QuizBuilderComponent implements OnInit {
 
     get defaultNewQuestion(): QuestionEditModel {
         let newQuestion = new QuestionEditModel();
+        newQuestion.id = this.helperService.undefinedId;
         newQuestion.title = 'What is the sense of our lives?';
         newQuestion.answers = this.defaultNewQuestionAnswers;
         return newQuestion;

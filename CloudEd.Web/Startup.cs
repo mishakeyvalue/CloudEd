@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using CloudEd.DAL.Repositories;
 using CloudEd.DAL.Persistence;
 using CloudEd.BLL.Core.Quiz.Services;
+using CloudEd.BLL.Core.Question.Services;
 
 namespace CES
 {
@@ -38,6 +39,12 @@ namespace CES
 
             var quizBackofficeService = new QuizBackofficeService(mongoQuizRepository);
             services.AddSingleton<IQuizBackofficeService>(quizBackofficeService);
+
+            var mongoQuestonRepository = new MongoRepository<Question, Guid>(connectionString);
+            services.AddSingleton<IRepository<Question, Guid>>(mongoQuestonRepository);
+
+            var questionBackofficeService = new QuestionBackofficeService(mongoQuestonRepository);
+            services.AddSingleton<IQuestionBackofficeService>(questionBackofficeService);
 
             services.AddMvc();
         }
