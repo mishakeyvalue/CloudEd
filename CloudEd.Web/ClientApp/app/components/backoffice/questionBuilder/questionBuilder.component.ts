@@ -42,17 +42,17 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
         this.ngOnChanges();
     }
 
-    public doAnswer(answerIndex: number): void {
-        this.deselectOthers(answerIndex);
-        this.ngOnChanges();
-    }
-
     private deselectOthers(answerIndex: number): void {
-
-        let arr = this.questionForm.value.answers;
+        let arr = this.question.answers;
         arr.forEach((a, i) => {
-            if (i != answerIndex)
+            if (i != answerIndex) {
                 a.isCorrect = false;
+                console.log('beakon')
+            }
+            else {
+                a.isCorrect = true;
+                console.log('banana')
+            }
         });
     }
 
@@ -74,8 +74,15 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
         return result;
     }
 
+    public doAnswer(answerId: number): void {
+        this.deselectOthers(answerId);
+        this.ngOnChanges();
+    }
+
     public addAnswer(): void {
-        this.answers.push(this.fb.group(this.sampleAnswer));
+        let newAnswer = this.sampleAnswer;
+        this.question.answers.push(newAnswer);
+        this.ngOnChanges();
     }
 
     private get sampleAnswer(): AnswerEditModel {
