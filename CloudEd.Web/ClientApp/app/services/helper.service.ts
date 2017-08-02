@@ -9,7 +9,7 @@ export class HelperService{
     private static readonly _newEntityId = '_undefinedId_';
 
     public get undefinedId(): string {
-        return HelperService._newEntityId + HelperService._counter;
+        return HelperService._newEntityId + HelperService._counter++;
     }
 
     public isNewEntity(entityId: string): boolean {
