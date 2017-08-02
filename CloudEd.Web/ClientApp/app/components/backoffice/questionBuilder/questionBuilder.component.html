@@ -8,7 +8,7 @@
             <div class="input-group" *ngFor="let answer of answers.controls; let i=index;" [formGroupName]="i">
                 <span class="input-group-addon">#{{i}}</span>
                 <span class="input-group-addon">
-                    <input type="checkbox" formControlName="isCorrect">
+                    <input type="checkbox" (change)="doAnswer(i)" formControlName="isCorrect">
                 </span>
                 <input class="form-control" formControlName="body" />
             </div>

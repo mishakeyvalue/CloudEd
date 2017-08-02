@@ -4,14 +4,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class HelperService{
 
-    private readonly _newEntityId = '_undefinedId';
+    private static _counter: number = 0;
+
+    private static readonly _newEntityId = '_undefinedId_';
 
     public get undefinedId(): string {
-        return this._newEntityId;
+        return HelperService._newEntityId + HelperService._counter;
     }
 
     public isNewEntity(entityId: string): boolean {
-        return entityId === this._newEntityId;
+        return entityId.startsWith(HelperService._newEntityId);
     }
 }
 

@@ -12,7 +12,7 @@ import { AnswerEditModel } from './../../../models/answerEditModel';
     providers: [HelperService, FormBuilder]
 })
 export class QuestionBuilderComponent implements OnInit, OnChanges {
-    private readonly answersKey: string = 'answers';
+    private readonly answersControlKey: string = 'answers';
 
     public isRestDataLoaded: boolean;
 
@@ -22,7 +22,6 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
 
     constructor(private helperService: HelperService,
         private fb: FormBuilder) {
-
     }
 
     ngOnChanges(): void {
@@ -31,6 +30,9 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
                 title: this.question.title,
             });
             this.setAnswers(this.question.answers);
+            console.log('Changes occurred!');
+            console.log(this.question.answers);
+            console.log('------')
         }
     }
 
@@ -40,22 +42,35 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
         this.ngOnChanges();
     }
 
+    public doAnswer(answerIndex: number): void {
+        this.deselectOthers(answerIndex);
+        this.ngOnChanges();
+    }
+
+    private deselectOthers(answerIndex: number): void {
+
+        let arr = this.questionForm.value.answers;
+        arr.forEach((a, i) => {
+            if (i != answerIndex)
+                a.isCorrect = false;
+        });
+    }
+
     private createForm(): void {
         this.questionForm = this.fb.group({
             title: this.question.title,
             answers: this.fb.array([])
-
         });
     }
 
     private setAnswers(answers: AnswerEditModel[]): void {
         const answerFGs = answers.map(a => this.fb.group(a));
         const answerFormArray = this.fb.array(answerFGs);
-        this.questionForm.setControl(this.answersKey, answerFormArray);
+        this.questionForm.setControl(this.answersControlKey, answerFormArray);
     }
 
     public get answers(): FormArray {
-        let result = this.questionForm.get(this.answersKey) as FormArray;
+        let result = this.questionForm.get(this.answersControlKey) as FormArray;
         return result;
     }
 
