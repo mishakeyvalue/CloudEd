@@ -18,6 +18,8 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
     public isRestDataLoaded: boolean;
 
     @Input() public question: QuestionEditModel;
+    @Output() questionOnCreated: EventEmitter<QuestionEditModel>
+        = new EventEmitter<QuestionEditModel>();
 
     public questionForm: FormGroup;
 
@@ -94,6 +96,8 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
         this.helperService.isNewEntity(this.question.id)
             ? this.questionBackofficeService.create(this.question)
             : this.questionBackofficeService.save(this.question);
+        console.log('Emitting..)')
+        this.questionOnCreated.emit(this.question);
     }
 
     private get sampleAnswer(): AnswerEditModel {

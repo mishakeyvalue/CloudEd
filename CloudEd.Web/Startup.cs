@@ -33,19 +33,20 @@ namespace CES
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("mongo");
-            // Add framework services.
+
             var mongoQuizRepository = new MongoRepository<Quiz, Guid>(connectionString);
             services.AddSingleton<IRepository<Quiz, Guid>>(mongoQuizRepository);
-
-            var quizBackofficeService = new QuizBackofficeService(mongoQuizRepository);
-            services.AddSingleton<IQuizBackofficeService>(quizBackofficeService);
 
             var mongoQuestonRepository = new MongoRepository<Question, Guid>(connectionString);
             services.AddSingleton<IRepository<Question, Guid>>(mongoQuestonRepository);
 
+            var quizBackofficeService = new QuizBackofficeService(mongoQuizRepository, mongoQuestonRepository);
+            services.AddSingleton<IQuizBackofficeService>(quizBackofficeService);
+
             var questionBackofficeService = new QuestionBackofficeService(mongoQuestonRepository);
             services.AddSingleton<IQuestionBackofficeService>(questionBackofficeService);
 
+            // Add framework services.
             services.AddMvc();
         }
 

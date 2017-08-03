@@ -30,13 +30,7 @@ export class QuizBackofficeService {
 
     constructor(private http: Http,
         private helperService: HelperService,
-        @Inject('ORIGIN_URL') private originUrl: string ) {
-        let newQuiz = new QuizEditModel();
-        newQuiz.title = 'Sample Quiz';
-        newQuiz.id = 'ij1234iji-asf;kdlj234-kmfasdw3';
-        this.stubbedQuizez.push(newQuiz);
-
-    }
+        @Inject('ORIGIN_URL') private originUrl: string ) {}
 
     public getAll(): QuizEditModel[] {
         return [];

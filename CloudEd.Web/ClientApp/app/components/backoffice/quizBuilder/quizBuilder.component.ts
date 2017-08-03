@@ -55,6 +55,7 @@ export class QuizBuilderComponent implements OnInit {
         this.quizesToEdit = [];
         this.quizBackofficeService.quizes.then((d => {
             d.push(this.quizToCreate);
+            d.forEach(q => q.questions.push(this.defaultNewQuestion));
             this.quizesToEdit = d;            
         }));
         let newQuiz = this.quizToCreate;
@@ -70,6 +71,11 @@ export class QuizBuilderComponent implements OnInit {
             this.quizBackofficeService.create(quiz);
         else
             this.quizBackofficeService.save(quiz);
+    }
+
+    public onQuestionCreated(newQuestion: QuestionEditModel) {
+        console.log('Got answer from child! ' + JSON.stringify(newQuestion));
+        this.quizToCreate.questions.push(newQuestion);
     }
 
     public loadQuiz(selectedQuizId: string): void {

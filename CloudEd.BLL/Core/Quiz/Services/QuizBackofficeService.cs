@@ -11,10 +11,16 @@ namespace CloudEd.BLL.Core.Quiz.Services
     public class QuizBackofficeService : IQuizBackofficeService
     {
         private readonly IRepository<DAL.Persistence.Quiz, Guid> _quizRepository;
+        private readonly IRepository<DAL.Persistence.Question, Guid> _questionRepository;
 
-        public QuizBackofficeService(IRepository<CloudEd.DAL.Persistence.Quiz, Guid> quizRepository)
+        public QuizBackofficeService(
+            IRepository<CloudEd.DAL.Persistence.Quiz, Guid> quizRepository,
+            IRepository<CloudEd.DAL.Persistence.Question, Guid> questionRepository
+
+            )
         {
             _quizRepository = quizRepository;
+            _questionRepository = questionRepository;
         }
 
         public IEnumerable<QuizEditModel> GetAll()
@@ -43,7 +49,7 @@ namespace CloudEd.BLL.Core.Quiz.Services
                 Id = Guid.NewGuid(),
                 Title = createModel.Title,
                 Description = createModel.Description,
-                Questions = Enumerable.Empty<DAL.Persistence.Question>()
+                QuestionIds = Enumerable.Empty<Guid>()
             };
         }
 
@@ -54,8 +60,18 @@ namespace CloudEd.BLL.Core.Quiz.Services
                 Id = quiz.Id,
                 Title = quiz.Title,
                 Description = quiz.Description,
-                Questions = quiz.Questions.Select(MapQuestionPersistnenceToEditModel)
+                Questions = GetQuestionsByIds(quiz.QuestionIds)
             };
+        }
+
+        private IEnumerable<QuestionEditModel> GetQuestionsByIds(IEnumerable<Guid> questionIds)
+        {
+            return _questionRepository.GetAll()
+                .Join(
+                questionIds,
+                persistence => persistence.Id,
+                id => id,
+                (persistence, id) => MapQuestionPersistnenceToEditModel(persistence));
         }
 
         private QuestionEditModel MapQuestionPersistnenceToEditModel(DAL.Persistence.Question question)
@@ -81,7 +97,6 @@ namespace CloudEd.BLL.Core.Quiz.Services
                 
             }
         }
-
 
     }
 }
