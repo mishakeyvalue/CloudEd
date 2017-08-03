@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CloudEd.BLL.Core.Quiz.Models;
 
 namespace CloudEd.BLL.Core.Quiz.Services
@@ -8,5 +9,8 @@ namespace CloudEd.BLL.Core.Quiz.Services
         IEnumerable<QuizEditModel> GetAll();
         void Save(QuizEditModel quiz);
         void Create(QuizCreateModel quiz);
+
+        void AddRelations(Guid quizId, IEnumerable<Guid> newQuestionIds);
+        void RemoveRelations(Guid quizId, IEnumerable<Guid> questionIds);
     }
 }

@@ -42,6 +42,21 @@ namespace CloudEd.BLL.Core.Quiz.Services
             _quizRepository.Add(MapQuizCreateModelToPersistence(createModel));
         }
 
+        public void AddRelations(Guid quizId, IEnumerable<Guid> newQuestionIds)
+        {
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds =  quiz.QuestionIds.Concat(newQuestionIds);
+            _quizRepository.Save(quiz);
+        }
+
+
+        public void RemoveRelations(Guid quizId, IEnumerable<Guid> questionIds)
+        {
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds = quiz.QuestionIds.Except(questionIds);
+            _quizRepository.Save(quiz);
+        }
+
         private DAL.Persistence.Quiz MapQuizCreateModelToPersistence(QuizCreateModel createModel)
         {
             return new DAL.Persistence.Quiz()
