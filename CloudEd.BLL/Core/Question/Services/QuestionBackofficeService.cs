@@ -34,7 +34,7 @@ namespace CloudEd.BLL.Core.Question.Services
                 Id = question.Id,
                 Title = question.Title,
                 Answers = question.Answers.Select(MapAnswerEditModelToPersistence),
-                CorrectAnswer = MapAnswerEditModelToPersistence(question.CorrectAnswer)
+                CorrectAnswer = MapAnswerEditModelToPersistence(question.Answers.First(q => q.IsCorrect))
             };
         }
         private Answer MapAnswerEditModelToPersistence(AnswerEditModel answer)

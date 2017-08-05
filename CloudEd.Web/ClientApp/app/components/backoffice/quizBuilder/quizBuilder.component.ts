@@ -76,6 +76,11 @@ export class QuizBuilderComponent implements OnInit {
     public onQuestionCreated(newQuestion: QuestionEditModel) {
         console.log('Got answer from child! ' + JSON.stringify(newQuestion));
         this.quizToCreate.questions.push(newQuestion);
+        this.quizBackofficeService.addQuestion(this.selectedQuizId, newQuestion.id).then(_ => {
+            console.log(_)
+            console.log('Saving ' + this.selectedQuizId)
+        }
+        );
     }
 
     public loadQuiz(selectedQuizId: string): void {

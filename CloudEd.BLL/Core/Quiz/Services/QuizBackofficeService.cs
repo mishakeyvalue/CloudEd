@@ -41,28 +41,7 @@ namespace CloudEd.BLL.Core.Quiz.Services
         {
             _quizRepository.Add(MapQuizCreateModelToPersistence(createModel));
         }
-
-        public void SaveRelations(Guid quizId, IEnumerable<Guid> questionIds)
-        {
-            var quiz = _quizRepository.Get(quizId);
-            quiz.QuestionIds = questionIds;
-            _quizRepository.Save(quiz);
-        }
-
-        public void AddRelations(Guid quizId, IEnumerable<Guid> newQuestionIds)
-        {
-            var quiz = _quizRepository.Get(quizId);
-            quiz.QuestionIds =  quiz.QuestionIds.Concat(newQuestionIds);
-            _quizRepository.Save(quiz);
-        }
-
-
-        public void RemoveRelations(Guid quizId, IEnumerable<Guid> questionIds)
-        {
-            var quiz = _quizRepository.Get(quizId);
-            quiz.QuestionIds = quiz.QuestionIds.Except(questionIds);
-            _quizRepository.Save(quiz);
-        }
+        
 
         private DAL.Persistence.Quiz MapQuizCreateModelToPersistence(QuizCreateModel createModel)
         {
@@ -121,5 +100,48 @@ namespace CloudEd.BLL.Core.Quiz.Services
             }
         }
 
+        public void AddQuestion(Guid quizId, Guid questionId)
+        {
+            ModifyQuizQuestionCollection(quizId,
+                (col) => col.Append(questionId));
+        }
+
+        public void RemoveQuestion(Guid quizId, Guid questionId)
+        {
+            ModifyQuizQuestionCollection(quizId, 
+                (col) => col.Where(id => id != questionId));
+        }
+
+        private void ModifyQuizQuestionCollection(Guid quizId, Func<IEnumerable<Guid>, IEnumerable<Guid>> modifier)
+        {
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds = modifier(quiz.QuestionIds);
+            _quizRepository.Save(quiz);
+        }
+
+        #region Bulk for now
+
+        public void SaveRelations(Guid quizId, IEnumerable<Guid> questionIds)
+        {
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds = questionIds;
+            _quizRepository.Save(quiz);
+        }
+
+        public void AddRelations(Guid quizId, IEnumerable<Guid> newQuestionIds)
+        {
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds = quiz.QuestionIds.Concat(newQuestionIds);
+            _quizRepository.Save(quiz);
+        }
+
+
+        public void RemoveRelations(Guid quizId, IEnumerable<Guid> questionIds)
+        {
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds = quiz.QuestionIds.Except(questionIds);
+            _quizRepository.Save(quiz);
+        }
+        #endregion
     }
 }

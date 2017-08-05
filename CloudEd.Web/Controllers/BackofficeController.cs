@@ -43,6 +43,20 @@ namespace CES.Controllers
             return Ok();
         }
 
+        [HttpPost("[action]")]
+        public IActionResult QuizQuestions([FromBody] QuizToQuestionRelation relation)
+        {
+            _quizBackofficeService.AddQuestion(relation.QuizId, relation.QuestionId);
+            return Ok();
+        }
+
+        public class QuizToQuestionRelation
+        {
+            public Guid QuizId{ get; set; }
+            public Guid QuestionId { get; set; }
+        }
+
+
         [HttpGet("[action]")]
         public IEnumerable<QuizEditModel> Question()
         {

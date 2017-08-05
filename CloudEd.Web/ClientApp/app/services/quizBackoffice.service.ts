@@ -42,4 +42,14 @@ export class QuizBackofficeService {
     public create(quiz: QuizEditModel): void {
         this.http.post(this.originUrl + '/api/Backoffice/Quiz', quiz).subscribe(res => console.log(res));
     }
+
+    public addQuestion(quizId: string, questionId: string) {
+        return this.http.post(this.originUrl + '/api/Backoffice/QuizQuestions', { quizId: quizId, questionId: questionId })
+            .toPromise()
+            .then(response => {
+                let r = response;
+
+            }
+               ) ;
+    }
 }
