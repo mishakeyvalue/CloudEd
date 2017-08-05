@@ -40,11 +40,12 @@ namespace CES
             var mongoQuestonRepository = new MongoRepository<Question, Guid>(connectionString);
             services.AddSingleton<IRepository<Question, Guid>>(mongoQuestonRepository);
 
-            var quizBackofficeService = new QuizBackofficeService(mongoQuizRepository, mongoQuestonRepository);
-            services.AddSingleton<IQuizBackofficeService>(quizBackofficeService);
+            services.AddSingleton<IQuizBackofficeService, QuizBackofficeService>();
+            services.AddSingleton<IQuestionBackofficeService, QuestionBackofficeService>();
 
-            var questionBackofficeService = new QuestionBackofficeService(mongoQuestonRepository);
-            services.AddSingleton<IQuestionBackofficeService>(questionBackofficeService);
+            services.AddSingleton<IQuestionService, QuestionService>();
+            services.AddSingleton<IQuizService, QuizService>();
+
 
             // Add framework services.
             services.AddMvc();
