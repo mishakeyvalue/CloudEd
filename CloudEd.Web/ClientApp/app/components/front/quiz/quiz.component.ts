@@ -20,15 +20,13 @@ export class QuizComponent implements OnInit {
     { }
 
     ngOnInit(): void {
-        this.quizes = this.quizService.getAll();
+        this.quizService.getAll().then(quizes => {
+            this.quizes = quizes;
+        });
     }
 
     get welcomeMessage(): string {
         return "Welcome to our cloud quiz application!";
-    }
-
-    get bananaTest(): string {
-        return this.quizService.greeting;
     }
 
     public loadQuiz(currentQuizId: string): void {
