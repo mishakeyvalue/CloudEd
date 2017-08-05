@@ -6,6 +6,7 @@ using CloudEd.DAL.Persistence;
 using CloudEd.BLL.Core.Question.Models;
 using System.Linq;
 using static CloudEd.DAL.Persistence.Question;
+using CloudEd.BLL.Core.Quiz.Services;
 
 namespace CloudEd.BLL.Core.Question.Services
 {
@@ -18,11 +19,12 @@ namespace CloudEd.BLL.Core.Question.Services
             _questionRepository = questionRepository;
         }
 
-        public void Save(QuestionEditModel question)
+        public QuestionEditModel Save(QuestionEditModel question)
         {
             var persitstenceEntity = _questionRepository.Get(question.Id);
             persitstenceEntity = MapQuestionEditModelToPersistence(question);
             _questionRepository.Save(persitstenceEntity);
+            return question;
         }
 
         private DAL.Persistence.Question MapQuestionEditModelToPersistence(QuestionEditModel question)
@@ -44,9 +46,10 @@ namespace CloudEd.BLL.Core.Question.Services
             };
         }
 
-        public void Create(QuestionCreateModel question)
+        public QuestionEditModel Create(QuestionCreateModel question)
         {
-            _questionRepository.Add(MapQuestionCreateModelToPersistence(question));
+           Guid id = _questionRepository.Add(MapQuestionCreateModelToPersistence(question));
+            return QuizBackofficeService.MapQuestionPersistnenceToEditModel(_questionRepository.Get(id));
         }
 
         private DAL.Persistence.Question MapQuestionCreateModelToPersistence(QuestionCreateModel question)

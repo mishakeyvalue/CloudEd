@@ -51,17 +51,17 @@ namespace CES.Controllers
         }
 
         [HttpPut("[action]")]
-        public IActionResult Question([FromBody] QuestionEditModel editModel)
+        public QuestionEditModel Question([FromBody] QuestionEditModel editModel)
         {
-            _questionBackofficeService.Save(editModel);
-            return Ok();
+            var result = _questionBackofficeService.Save(editModel);
+            return result;
         }
 
         [HttpPost("[action]")]
-        public IActionResult Question([FromBody] QuestionCreateModel createModel)
+        public QuestionEditModel Question([FromBody] QuestionCreateModel createModel)
         {
-            _questionBackofficeService.Create(createModel);
-            return Ok();
+            var result = _questionBackofficeService.Create(createModel);
+            return result;
         }
     }
 }

@@ -42,6 +42,13 @@ namespace CloudEd.BLL.Core.Quiz.Services
             _quizRepository.Add(MapQuizCreateModelToPersistence(createModel));
         }
 
+        public void SaveRelations(Guid quizId, IEnumerable<Guid> questionIds)
+        {
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds = questionIds;
+            _quizRepository.Save(quiz);
+        }
+
         public void AddRelations(Guid quizId, IEnumerable<Guid> newQuestionIds)
         {
             var quiz = _quizRepository.Get(quizId);
@@ -89,7 +96,8 @@ namespace CloudEd.BLL.Core.Quiz.Services
                 (persistence, id) => MapQuestionPersistnenceToEditModel(persistence));
         }
 
-        private QuestionEditModel MapQuestionPersistnenceToEditModel(DAL.Persistence.Question question)
+        /// TODO
+        public static QuestionEditModel MapQuestionPersistnenceToEditModel(DAL.Persistence.Question question)
         {
             Guid correctAnswerId = question.CorrectAnswer.Id;
             return new QuestionEditModel()

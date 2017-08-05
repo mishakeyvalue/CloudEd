@@ -93,11 +93,14 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
 
     public saveQuestion(): void {
         console.log(this.question)
-        this.helperService.isNewEntity(this.question.id)
+        var promise = this.helperService.isNewEntity(this.question.id)
             ? this.questionBackofficeService.create(this.question)
             : this.questionBackofficeService.save(this.question);
-        console.log('Emitting..)')
-        this.questionOnCreated.emit(this.question);
+        promise.then((res) => {
+            console.log('Saved!');
+            this.question = res;
+            this.questionOnCreated.emit(this.question);
+        })
     }
 
     private get sampleAnswer(): AnswerEditModel {

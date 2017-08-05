@@ -29,11 +29,15 @@ export class QuestionBackofficeService {
         @Inject('ORIGIN_URL') private originUrl: string ) {
     }
 
-    public save(question: QuestionEditModel): void {
-        this.http.put(this.originUrl + '/api/Backoffice/Question', question).subscribe(res => console.log(res));
+    public save(question: QuestionEditModel) {
+        return this.http.put(this.originUrl + '/api/Backoffice/Question', question)
+            .toPromise()
+            .then(response => response.json() as QuestionEditModel);
     };
 
-    public create(question: QuestionEditModel): void {
-        this.http.post(this.originUrl + '/api/Backoffice/Question', question).subscribe(res => console.log(res));
+    public create(question: QuestionEditModel) {
+        return this.http.post(this.originUrl + '/api/Backoffice/Question', question)
+            .toPromise()
+            .then(response => response.json() as QuestionEditModel);
     }
 }

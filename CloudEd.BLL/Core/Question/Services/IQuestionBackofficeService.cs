@@ -4,7 +4,7 @@ namespace CloudEd.BLL.Core.Question.Services
 {
     public interface IQuestionBackofficeService
     {
-        void Create(QuestionCreateModel question);
-        void Save(QuestionEditModel question);
+        QuestionEditModel Create(QuestionCreateModel question);
+        QuestionEditModel Save(QuestionEditModel question);
     }
 }
