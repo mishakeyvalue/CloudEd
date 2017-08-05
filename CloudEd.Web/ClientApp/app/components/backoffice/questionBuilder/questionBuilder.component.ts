@@ -27,8 +27,7 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
         private helperService: HelperService,
         private fb: FormBuilder,
         private questionBackofficeService: QuestionBackofficeService
-    ) {
-    }
+    ) {}
 
     ngOnChanges(): void {
         if (this.isRestDataLoaded) {
@@ -81,26 +80,40 @@ export class QuestionBuilderComponent implements OnInit, OnChanges {
     }
 
     public doAnswer(answerId: number): void {
+        this.question = this.questionDeepCopy();
         this.deselectOthers(answerId);
         this.ngOnChanges();
     }
 
     public addAnswer(): void {
         let newAnswer = this.sampleAnswer;
-        this.question.answers.push(newAnswer);
-        this.ngOnChanges();
+        this.answers.push(this.fb.group(newAnswer));
     }
 
     public saveQuestion(): void {
-        console.log(this.question)
-        var promise = this.helperService.isNewEntity(this.question.id)
-            ? this.questionBackofficeService.create(this.question)
-            : this.questionBackofficeService.save(this.question);
+        let question = this.questionDeepCopy();
+        var promise = this.helperService.isNewEntity(question.id)
+            ? this.questionBackofficeService.create(question)
+            : this.questionBackofficeService.save(question);
         promise.then((res) => {
             console.log('Saved!');
             this.question = res;
             this.questionOnCreated.emit(this.question);
         })
+    }
+
+    private questionDeepCopy(): QuestionEditModel {
+        const formModel = this.questionForm.value;
+        const answersDeepCopy: AnswerEditModel[] = formModel.answers.map(
+            (a: AnswerEditModel) => Object.assign({}, a)
+        );
+        const saveModel: QuestionEditModel = {
+            id: this.question.id,
+            title: formModel.title as string,
+            answers: answersDeepCopy,
+            correctAnswer: this.question.answers.find(a => a.isCorrect)
+        }
+        return saveModel;
     }
 
     private get sampleAnswer(): AnswerEditModel {
