@@ -41,7 +41,7 @@ namespace CloudEd.Tests.Mocks
             return arr;
         }
 
-        private static Question GenerateChickenQuestion()
+        public static Question GenerateChickenQuestion()
         {
             var answers = GenerateChickenAnswers();
             return new Question()

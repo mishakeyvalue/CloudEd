@@ -17,7 +17,8 @@ namespace CloudEd.Tests.Mocks
         
         public InMemoryRepository(IEnumerable<TEntity> initColletion)
         {
-            _list.Concat(initColletion);
+            foreach (var item in initColletion)
+                _list.Add(item);
         }
 
         public Guid Add(TEntity item)

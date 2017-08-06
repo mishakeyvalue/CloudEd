@@ -8,79 +8,31 @@ using Xunit;
 using System.Collections.Generic;
 using CloudEd.DAL.Repositories;
 using static CloudEd.DAL.Persistence.Question;
+using CloudEd.BLL.Helpers;
 
 namespace CloudEd.Tests
 {
     public class QuizBackofficeService_Tests
     {
         private readonly IQuizBackofficeService _quizBackofficeService;
-        private Question StubQuestion;
+        private Question stubQuestionOutsideQuiz = QuizGenerator.GenerateChickenQuestion();
 
         public QuizBackofficeService_Tests()
         {
-            var quizMockRepo = new InMemoryRepository<Quiz>();
-            AddStubQuizes(quizMockRepo);
-            var questionMockRepo = new InMemoryRepository<Question>();
-            AddStubQuestions(questionMockRepo);
+            (var quiz, var questions) = QuizGenerator.GetQuizWithQuestions();
+            var quizMockRepo = new InMemoryRepository<Quiz>(quiz.ToEnumerableOfOne());
+            var questionMockRepo = new InMemoryRepository<Question>(questions.Append(stubQuestionOutsideQuiz));
+
             var service = new QuizBackofficeService(quizMockRepo, questionMockRepo);
             _quizBackofficeService = service;
-        }
-
-        #region Helpers
-        private void AddStubQuizes(InMemoryRepository<Quiz> quizMockRepo)
-        {
-            var quiz = new Quiz()
-            {
-                Id = Guid.NewGuid(),
-                Title = "Stub",
-                Description = "This is my stub",
-                QuestionIds = GenerateGuids(12)
-            };
-            quizMockRepo.Add(quiz);
-        }
-
-        private IEnumerable<Guid> GenerateGuids(int n)
-        {
-            var arr = new Guid[n];
-            for (int i = 0; i < n; i++)
-            {
-                arr[i] = Guid.NewGuid();
-            }
-            return arr;
-        }
-        private void AddStubQuestions(InMemoryRepository<Question> questionMockRepo)
-        {
-            var answers = new List<Answer>()
-            {
-                new Answer()
-                {
-                    Id = Guid.NewGuid(),
-                    Body = "42"
-                },
-
-                new Answer()
-                {
-                    Id = Guid.NewGuid(),
-                    Body = "455"
-                }
-            };
-            StubQuestion = new Question()
-            {
-                Id = Guid.NewGuid(),
-                Title = "Stubbed question",
-                Answers = answers,
-                CorrectAnswer = answers.First()
-            };
-            questionMockRepo.Add(StubQuestion);
-        }
-        #endregion
+        }        
 
         [Fact]
         public void AddQuestion_RelationAdded()
         {
             // arrange
             QuizEditModel quiz = _quizBackofficeService.GetAll().First();
-            Guid dummyQuestionId = StubQuestion.Id;
+            Guid dummyQuestionId = stubQuestionOutsideQuiz.Id;
 
             // act
             _quizBackofficeService.AddQuestion(quiz.Id, dummyQuestionId);
