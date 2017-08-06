@@ -21,7 +21,7 @@ namespace CloudEd.BLL.Core.Question.Services
             return result;
         }
 
-        private QuestionViewModel MapQuestionPersistenceToViewModel(DAL.Persistence.Question question)
+        public static QuestionViewModel MapQuestionPersistenceToViewModel(DAL.Persistence.Question question)
         {
             var answers = question.Answers.Select(a =>
                 new AnswerViewModel()

@@ -29,8 +29,23 @@ namespace CloudEd.Tests
             _questionMockRepo = new InMemoryRepository<Question>(questions);
 
             var questionService= new QuestionService(_questionMockRepo);
-            _quizWorkflowService = new QuizWorkflowService();
+            _quizWorkflowService = new QuizWorkflowService(_questionMockRepo, _quizMockRepo, questionService);
             _quizService = new QuizService(_quizMockRepo, questionService);
+        }
+
+        [Fact]
+        public void Workflow_PickAllIncorrect_ReturnsProperResult()
+        {
+            // arrange
+            (var rawQuiz, var quizQuestions) = GetRawQuizWithQuestions();
+
+            // act
+            var takenQuiz = PickAllIncorrect(rawQuiz, quizQuestions);
+            var quizResult = _quizWorkflowService.Check(takenQuiz);
+
+            // assert
+            bool isAllAnsweredIncorrectly = takenQuiz.Bits.All(q => !IsAnsweredCorrectly(q, quizResult));
+            Assert.True(isAllAnsweredIncorrectly);
         }
 
         [Fact]
@@ -44,8 +59,15 @@ namespace CloudEd.Tests
             var quizResult = _quizWorkflowService.Check(takenQuiz);
 
             // assert
-            bool isAllAnsweredCorrectly = quizResult.SubmittedQuestions.All(q => q.IsAnsweredCorrectly);
+            bool isAllAnsweredCorrectly = takenQuiz.Bits.All(q => IsAnsweredCorrectly(q, quizResult));
             Assert.True(isAllAnsweredCorrectly);
+        }
+
+
+        private bool IsAnsweredCorrectly(WorkflowBit answeredQuestion, QuizWorkflowResultModel quizResult)
+        {
+            var question = quizResult.SubmittedQuestions.First(q => q.Id == answeredQuestion.QuestionId);
+            return question.IsAnsweredCorrectly;
         }
 
         private (Quiz, IEnumerable<Question>) GetRawQuizWithQuestions()
@@ -66,6 +88,26 @@ namespace CloudEd.Tests
                     QuestionId = question.Id,
                     AnswerId = question.CorrectAnswer.Id
                 };
+                answers.Add(answer);
+            }
+            return new QuizWorkflowSubmitModel()
+            {
+                Bits = answers
+            };
+        }
+
+
+        private QuizWorkflowSubmitModel PickAllIncorrect(Quiz quiz, IEnumerable<Question> questions)
+        {
+            var answers = new List<WorkflowBit>();
+            foreach (var question in questions)
+            {
+                var answer = new WorkflowBit()
+                {
+                    QuestionId = question.Id,
+                    AnswerId = question.Answers.First(a => a.Id != question.CorrectAnswer.Id).Id
+                };
+                answers.Add(answer);
             }
             return new QuizWorkflowSubmitModel()
             {
