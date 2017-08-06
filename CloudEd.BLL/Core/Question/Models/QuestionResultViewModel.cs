@@ -7,9 +7,9 @@ namespace CloudEd.BLL.Core.Question.Models
     public class QuestionResultViewModel : QuestionViewModel
     {
         public bool IsAnsweredCorrectly {
-            get => CorrectAnswer.Id == TakenAnswer.Id;
+            get => CorrectAnswerId == TakenAnswerId;
         }
-        public AnswerViewModel TakenAnswer { get; set; }
-        public AnswerViewModel CorrectAnswer { get; set; }
+        public Guid TakenAnswerId { get; set; }
+        public Guid CorrectAnswerId { get; set; }
     }
 }
