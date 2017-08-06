@@ -11,7 +11,7 @@ import { LearningRoutineModel, LearningBit } from "../../../models/learningRouti
     providers: [QuizService]
 })
 export class QuizComponent implements OnInit {
-    private learnignRoutine: LearningRoutineModel = {learningBits: []};
+    private learnignRoutine: LearningRoutineModel = {bits: []};
 
     public quizes: QuizViewModel[];
     public currentQuiz: QuizViewModel;
@@ -32,7 +32,7 @@ export class QuizComponent implements OnInit {
     }
 
     public questionOnAnswered(bit: LearningBit): void {
-        let bits = this.learnignRoutine.learningBits;
+        let bits = this.learnignRoutine.bits;
         for (let i = 0; i < bits.length; i++) {
             if (bits[i].questionId == bit.questionId) {
                 bits[i] = bit;
@@ -45,6 +45,12 @@ export class QuizComponent implements OnInit {
     public loadQuiz(currentQuizId: string): void {
         this.isQuizStarted = true;
         this.currentQuiz = this.quizes.find((q) => q.id === currentQuizId);
+        this.learnignRoutine.bits = this.currentQuiz.questions.map(q => ({ questionId: q.id } as LearningBit))
+    }
+
+    public submitQuiz(): void {
+        this.quizService.submitQuiz(this.learnignRoutine)
+            .then(r => console.log(r));
     }
     
 }

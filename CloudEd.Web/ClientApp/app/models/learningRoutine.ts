@@ -1,5 +1,5 @@
 ﻿export class LearningRoutineModel {
-    public learningBits: LearningBit[];
+    public bits: LearningBit[];
 }
 
 export class LearningBit {

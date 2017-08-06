@@ -12,6 +12,7 @@ using CloudEd.DAL.Repositories;
 using CloudEd.DAL.Persistence;
 using CloudEd.BLL.Core.Quiz.Services;
 using CloudEd.BLL.Core.Question.Services;
+using CloudEd.BLL.Core.QuizWorkflow.Services;
 
 namespace CES
 {
@@ -45,6 +46,7 @@ namespace CES
 
             services.AddSingleton<IQuestionService, QuestionService>();
             services.AddSingleton<IQuizService, QuizService>();
+            services.AddSingleton<IQuizWorkflowService, QuizWorkflowService>();
 
 
             // Add framework services.

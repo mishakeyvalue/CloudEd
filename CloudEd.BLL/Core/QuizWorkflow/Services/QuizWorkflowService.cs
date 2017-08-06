@@ -48,8 +48,8 @@ namespace CloudEd.BLL.Core.QuizWorkflow.Services
             QuestionResultViewModel CheckOneAnswer(WorkflowBit answer, DAL.Persistence.Question question)
             {
                 var resultViewModel = MapQuestionPersistenceToResultViewModel(question);
-                resultViewModel.CorrectAnswer = resultViewModel.Answers.First(a => a.Id == question.CorrectAnswer.Id);
-                resultViewModel.TakenAnswer = resultViewModel.Answers.First(a => a.Id == answer.AnswerId);
+                resultViewModel.CorrectAnswerId = resultViewModel.Answers.First(a => a.Id == question.CorrectAnswer.Id).Id;
+                resultViewModel.TakenAnswerId = resultViewModel.Answers.FirstOrDefault(a => a.Id == answer.AnswerId)?.Id ?? Guid.Empty;
                 return resultViewModel;
             }
         }
