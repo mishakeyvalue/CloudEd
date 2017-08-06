@@ -7,6 +7,7 @@ using System.Linq;
 using Xunit;
 using System.Collections.Generic;
 using CloudEd.DAL.Repositories;
+using CloudEd.BLL.Helpers;
 
 namespace CloudEd.Tests
 {
@@ -26,6 +27,20 @@ namespace CloudEd.Tests
 
             // assert
             Assert.Contains(repo.GetAll(), ent => ent.Id == item.Id);
+        }
+
+        [Fact]
+        public void StubbedQuizCollection_ContainsQuestionsWithCorrectAnswers()
+        {
+            // arrange
+            (var quiz, var questions) = QuizGenerator.GetQuizWithQuestions();
+            var question = questions.RandomElement();
+
+            // act
+            var correctAnswer = question.CorrectAnswer;
+            // assert
+            Assert.Contains(question.Answers, a => a.Id == correctAnswer.Id);
+
         }
 
         private class DummyPersistenceEntity : IEntity<Guid>
