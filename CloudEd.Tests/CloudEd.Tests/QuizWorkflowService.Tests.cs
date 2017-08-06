@@ -7,87 +7,71 @@ using System.Linq;
 using Xunit;
 using System.Collections.Generic;
 using CloudEd.DAL.Repositories;
-using static CloudEd.DAL.Persistence.Question;
+using CloudEd.BLL.Core.QuizWorkflow.Services;
+using CloudEd.BLL.Helpers;
+using CloudEd.BLL.Core.Question.Services;
+using CloudEd.BLL.Core.QuizWorkflow.Models;
+using static CloudEd.BLL.Core.QuizWorkflow.Models.QuizWorkflowSubmitModel;
 
 namespace CloudEd.Tests
 {
     public class QuizWorkflowService_Tests
     {
-        private readonly IQuizBackofficeService _quizBackofficeService;
-        private Question StubQuestion;
+        private readonly IQuizWorkflowService _quizWorkflowService;
+        private readonly IQuizService _quizService;
+        private readonly InMemoryRepository<Quiz> _quizMockRepo;
+        private readonly InMemoryRepository<Question> _questionMockRepo;
 
         public QuizWorkflowService_Tests()
         {
-            var quizMockRepo = new InMemoryRepository<Quiz>();
-            AddStubQuizes(quizMockRepo);
-            var questionMockRepo = new InMemoryRepository<Question>();
-            AddStubQuestions(questionMockRepo);
-            var service = new QuizBackofficeService(quizMockRepo, questionMockRepo);
-            _quizBackofficeService = service;
-        }
+            (var quiz, var questions) = QuizGenerator.GetQuizWithQuestions();
+            _quizMockRepo = new InMemoryRepository<Quiz>(quiz.ToEnumerableOfOne());
+            _questionMockRepo = new InMemoryRepository<Question>(questions);
 
-        #region Helpers
-        private void AddStubQuizes(InMemoryRepository<Quiz> quizMockRepo)
-        {
-            var quiz = new Quiz()
-            {
-                Id = Guid.NewGuid(),
-                Title = "Stub",
-                Description = "This is my stub",
-                QuestionIds = GenerateGuids(12)
-            };
-            quizMockRepo.Add(quiz);
+            var questionService= new QuestionService(_questionMockRepo);
+            _quizWorkflowService = new QuizWorkflowService();
+            _quizService = new QuizService(_quizMockRepo, questionService);
         }
-
-        private IEnumerable<Guid> GenerateGuids(int n)
-        {
-            var arr = new Guid[n];
-            for (int i = 0; i < n; i++)
-            {
-                arr[i] = Guid.NewGuid();
-            }
-            return arr;
-        }
-        private void AddStubQuestions(InMemoryRepository<Question> questionMockRepo)
-        {
-            var answers = new List<Answer>()
-            {
-                new Answer()
-                {
-                    Id = Guid.NewGuid(),
-                    Body = "42"
-                },
-
-                new Answer()
-                {
-                    Id = Guid.NewGuid(),
-                    Body = "455"
-                }
-            };
-            StubQuestion = new Question()
-            {
-                Id = Guid.NewGuid(),
-                Title = "Stubbed question",
-                Answers = answers,
-                CorrectAnswer = answers.First()
-            };
-            questionMockRepo.Add(StubQuestion);
-        }
-        #endregion
 
         [Fact]
-        public void AddQuestion_RelationAdded()
+        public void Workflow_PickAllCorrect_ReturnsProperResult()
         {
             // arrange
-            QuizEditModel quiz = _quizBackofficeService.GetAll().First();
-            Guid dummyQuestionId = StubQuestion.Id;
+            (var rawQuiz, var quizQuestions) = GetRawQuizWithQuestions();
 
             // act
-            _quizBackofficeService.AddQuestion(quiz.Id, dummyQuestionId);
+            var takenQuiz = PickAllCorrect(rawQuiz, quizQuestions);
+            var quizResult = _quizWorkflowService.Check(takenQuiz);
 
-            //assert
-            QuizEditModel savedQuiz = _quizBackofficeService.GetAll().First(q => q.Id == quiz.Id);
-            Assert.Contains(savedQuiz.Questions, q => q.Id == dummyQuestionId);
+            // assert
+            bool isAllAnsweredCorrectly = quizResult.SubmittedQuestions.All(q => q.IsAnsweredCorrectly);
+            Assert.True(isAllAnsweredCorrectly);
         }
+
+        private (Quiz, IEnumerable<Question>) GetRawQuizWithQuestions()
+        {
+            var quiz = _quizMockRepo.GetAll().First();
+            var questions = _questionMockRepo.GetAll().Join(quiz.QuestionIds, q => q.Id, id => id, (q, id) => q);
+            return (quiz, questions);
+        }
+
+
+        private QuizWorkflowSubmitModel PickAllCorrect(Quiz quiz, IEnumerable<Question> questions)
+        {
+            var answers = new List<WorkflowBit>();
+            foreach (var question in questions)
+            {
+                var answer = new WorkflowBit()
+                {
+                    QuestionId = question.Id,
+                    AnswerId = question.CorrectAnswer.Id
+                };
+            }
+            return new QuizWorkflowSubmitModel()
+            {
+                Bits = answers
+            };
+        }
+
     }
 }
