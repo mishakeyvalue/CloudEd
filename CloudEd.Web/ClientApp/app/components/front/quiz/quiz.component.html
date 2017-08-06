@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!isQuizChecked" else elseBlock>
     <h1>{{ welcomeMessage }}</h1>
     
     <div class="from-group">
@@ -15,4 +15,9 @@
         </table>
         <button class="btn btn-danger" (click)="submitQuiz()">Submit quiz</button>
     </div>
+</div>
+<div *ngIf="isQuizChecked" >
+    <my-quiz-result [result]="quizResult">
+
+    </my-quiz-result>
 </div>

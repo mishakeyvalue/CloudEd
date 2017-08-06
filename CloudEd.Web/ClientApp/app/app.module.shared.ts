@@ -12,6 +12,8 @@ import { QuestionComponent } from './components/front/question/question.componen
 
 import { QuizBuilderComponent } from './components/backoffice/quizBuilder/quizBuilder.component';
 import { QuestionBuilderComponent } from './components/backoffice/questionBuilder/questionBuilder.component';
+import { QuizResultComponent } from "./components/front/quiz/quizResult.component";
+import { QuestionResultComponent } from "./components/front/question/questionResult.component";
 
 export const sharedConfig: NgModule = {
     bootstrap: [ AppComponent ],
@@ -21,7 +23,9 @@ export const sharedConfig: NgModule = {
         FetchDataComponent,
         HomeComponent,
         QuizComponent,
+        QuizResultComponent,
         QuestionComponent,
+        QuestionResultComponent,
         QuizBuilderComponent,
         QuestionBuilderComponent,
     ],

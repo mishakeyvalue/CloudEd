@@ -4,6 +4,7 @@ import { QuizService } from './../../../services/quiz.service';
 
 import { QuizViewModel } from "../../../models/quizViewModel";
 import { LearningRoutineModel, LearningBit } from "../../../models/learningRoutine";
+import { QuizWorkflowResultViewModel } from "../../../models/quizWorkflowResultViewModel";
 
 @Component({
     selector: 'my-quiz',
@@ -11,11 +12,15 @@ import { LearningRoutineModel, LearningBit } from "../../../models/learningRouti
     providers: [QuizService]
 })
 export class QuizComponent implements OnInit {
-    private learnignRoutine: LearningRoutineModel = {bits: []};
+    private learnignRoutine: LearningRoutineModel = { bits: [] };
 
     public quizes: QuizViewModel[];
     public currentQuiz: QuizViewModel;
     public isQuizStarted: boolean = false;
+    public quizResult: QuizWorkflowResultViewModel;
+
+
+    public isQuizChecked: boolean = false;
     public currentQuizId: string;
 
     constructor(private quizService: QuizService)
@@ -37,7 +42,7 @@ export class QuizComponent implements OnInit {
             if (bits[i].questionId == bit.questionId) {
                 bits[i] = bit;
                 return;
-            }                
+            }
         }
         bits.push(bit); console.log(bits);
     }
@@ -50,7 +55,10 @@ export class QuizComponent implements OnInit {
 
     public submitQuiz(): void {
         this.quizService.submitQuiz(this.learnignRoutine)
-            .then(r => console.log(r));
+            .then(r => {
+                this.quizResult = r;
+                this.isQuizChecked = true;
+                console.log(r);
+            });
     }
-    
 }
