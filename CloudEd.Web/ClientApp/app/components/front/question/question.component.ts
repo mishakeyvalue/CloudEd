@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { QuestionViewModel } from './../../../models/questionViewModel';
 import { AnswerViewModel } from './../../../models/answerViewModel';
+import { LearningBit, LearningRoutineModel } from "../../../models/learningRoutine";
 
 
 @Component({
@@ -10,12 +11,16 @@ import { AnswerViewModel } from './../../../models/answerViewModel';
 })
 export class QuestionComponent {
     @Input() public question: QuestionViewModel;
-    @Output() onAnswered = new EventEmitter<QuestionViewModel>();
+    @Input() public resutl: LearningRoutineModel;
+    @Output() onAnswered = new EventEmitter<LearningBit>();
 
     public doAnswer(answer: AnswerViewModel): void {
         this.deselectOthers(answer);
         this.question.selectedAnswer = answer;
-        this.onAnswered.emit(this.question);
+        let learningBit = new LearningBit();
+        learningBit.questionId = this.question.id;
+        learningBit.answerId = answer.id;
+        this.onAnswered.emit(learningBit);
     }
 
     private deselectOthers(answer: AnswerViewModel): void {

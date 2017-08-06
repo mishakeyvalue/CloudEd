@@ -7,11 +7,12 @@
         </select>
     </div>
     <div *ngIf="isQuizStarted">
-        {{ currentQuiz.id }}
+        {{ currentQuiz.description }}
         <table>
             <tr *ngFor="let question of currentQuiz.questions">
-                <my-question [question]="question"></my-question>
+                <my-question (onAnswered)="questionOnAnswered($event)" [question]="question" [result]="learnignRoutine"></my-question>
             </tr>
         </table>
+        <button (click)="submitQuiz()"></button>
     </div>
 </div>

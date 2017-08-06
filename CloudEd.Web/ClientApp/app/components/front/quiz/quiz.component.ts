@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { QuizService } from './../../../services/quiz.service';
 
 import { QuizViewModel } from "../../../models/quizViewModel";
+import { LearningRoutineModel, LearningBit } from "../../../models/learningRoutine";
 
 @Component({
     selector: 'my-quiz',
@@ -10,8 +11,9 @@ import { QuizViewModel } from "../../../models/quizViewModel";
     providers: [QuizService]
 })
 export class QuizComponent implements OnInit {
-    public quizes: QuizViewModel[];
+    private learnignRoutine: LearningRoutineModel = {learningBits: []};
 
+    public quizes: QuizViewModel[];
     public currentQuiz: QuizViewModel;
     public isQuizStarted: boolean = false;
     public currentQuizId: string;
@@ -29,12 +31,20 @@ export class QuizComponent implements OnInit {
         return "Welcome to our cloud quiz application!";
     }
 
+    public questionOnAnswered(bit: LearningBit): void {
+        let bits = this.learnignRoutine.learningBits;
+        for (let i = 0; i < bits.length; i++) {
+            if (bits[i].questionId == bit.questionId) {
+                bits[i] = bit;
+                return;
+            }                
+        }
+        bits.push(bit); console.log(bits);
+    }
+
     public loadQuiz(currentQuizId: string): void {
         this.isQuizStarted = true;
         this.currentQuiz = this.quizes.find((q) => q.id === currentQuizId);
     }
-
-    public parentEventPropagation(): void {
-        alert()
-    }
+    
 }

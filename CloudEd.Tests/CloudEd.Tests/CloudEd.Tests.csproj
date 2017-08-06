@@ -12,6 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CloudEd.BLL\CloudEd.BLL.csproj" />
+    <ProjectReference Include="..\..\CloudEd.DAL\CloudEd.DAL.csproj" />
+    <ProjectReference Include="..\..\CloudEd.Web\CloudEd.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 

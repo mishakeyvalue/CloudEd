@@ -23,6 +23,5 @@
         </div>
         <button class="btn btn-success" (click)="saveQuiz(selectedQuizId)">Save description</button>
     </form>
-    {{selectedQuiz | json   }}
     <my-question-builder *ngFor="let question of selectedQuiz.questions" [question]="question" (questionOnCreated)="onQuestionCreated($event)"></my-question-builder>
 </div>

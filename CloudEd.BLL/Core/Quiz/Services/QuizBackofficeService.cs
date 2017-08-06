@@ -102,8 +102,9 @@ namespace CloudEd.BLL.Core.Quiz.Services
 
         public void AddQuestion(Guid quizId, Guid questionId)
         {
-            ModifyQuizQuestionCollection(quizId,
-                (col) => col.Append(questionId));
+            var quiz = _quizRepository.Get(quizId);
+            quiz.QuestionIds = quiz.QuestionIds.Append(questionId);
+            _quizRepository.Save(quiz);
         }
 
         public void RemoveQuestion(Guid quizId, Guid questionId)
@@ -117,6 +118,14 @@ namespace CloudEd.BLL.Core.Quiz.Services
             var quiz = _quizRepository.Get(quizId);
             quiz.QuestionIds = modifier(quiz.QuestionIds);
             _quizRepository.Save(quiz);
+        }
+
+        private static class Calculus
+        {
+            public static IEnumerable<Guid> AddIdToCollection(Guid id, IEnumerable<Guid> collection)
+            {
+                return collection.Append(id);
+            }
         }
 
         #region Bulk for now
