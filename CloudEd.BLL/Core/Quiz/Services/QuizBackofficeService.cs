@@ -100,18 +100,20 @@ namespace CloudEd.BLL.Core.Quiz.Services
             }
         }
 
-        public void AddQuestion(Guid quizId, Guid questionId)
-        {
-            var quiz = _quizRepository.Get(quizId);
-            quiz.QuestionIds = quiz.QuestionIds.Append(questionId);
-            _quizRepository.Save(quiz);
-        }
-
         public void RemoveQuestion(Guid quizId, Guid questionId)
         {
-            ModifyQuizQuestionCollection(quizId, 
+            ModifyQuizQuestionCollection(quizId,
                 (col) => col.Where(id => id != questionId));
         }
+
+        public void AddQuestion(Guid quizId, Guid questionId)
+        {
+            var collectionAdder = Calculus.Carry<Guid, IEnumerable<Guid>, IEnumerable<Guid>>
+                (Calculus.AddIdToCollection, questionId);
+
+            ModifyQuizQuestionCollection(quizId, collectionAdder);
+        }
+
 
         private void ModifyQuizQuestionCollection(Guid quizId, Func<IEnumerable<Guid>, IEnumerable<Guid>> modifier)
         {
@@ -122,10 +124,12 @@ namespace CloudEd.BLL.Core.Quiz.Services
 
         private static class Calculus
         {
+            public static Func<TParam2, TResult> Carry<TParam1, TParam2, TResult>
+                (Func<TParam1, TParam2, TResult> func, TParam1 param1) 
+                    => (TParam2 param2) => func(param1, param2);
+
             public static IEnumerable<Guid> AddIdToCollection(Guid id, IEnumerable<Guid> collection)
-            {
-                return collection.Append(id);
-            }
+                => collection.Append(id);         
         }
 
         #region Bulk for now

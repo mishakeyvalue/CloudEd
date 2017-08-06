@@ -12,6 +12,14 @@ namespace CloudEd.Tests.Mocks
     {
         private IList<TEntity> _list = new List<TEntity>();
 
+        public InMemoryRepository()
+        { }
+        
+        public InMemoryRepository(IEnumerable<TEntity> initColletion)
+        {
+            _list.Concat(initColletion);
+        }
+
         public Guid Add(TEntity item)
         {
             item.Id = Guid.NewGuid();
